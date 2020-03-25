@@ -1,0 +1,18 @@
+.Sucursal {
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    width: 100%;
+  }
+  .inputsucursal-wrapper{
+      width: 30%;
+      margin-right: 2%;
+  }
+
+  .tablesucursal-wrapper{
+      width: 70%;
+  }
+
+  .buttonsucursal-wrapper{
+      margin-top: 2%;
+  }
