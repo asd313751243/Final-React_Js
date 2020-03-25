@@ -1,0 +1,18 @@
+.Producto {
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    width: 100%;
+  }
+  .inputprod-wrapper{
+      width: 30%;
+      margin-right: 2%;
+  }
+
+  .tableprod-wrapper{
+      width: 70%;
+  }
+
+  .buttonprod-wrapper{
+      margin-top: 2%;
+  }
