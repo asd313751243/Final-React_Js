@@ -1,0 +1,18 @@
+.Sucursal_Producto {
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    width: 100%;
+  }
+  .inputsucursal_producto-wrapper{
+      width: 30%;
+      margin-right: 2%;
+  }
+
+  .tablesucursal_producto-wrapper{
+      width: 70%;
+  }
+
+  .buttonsucursal_producto-wrapper{
+      margin-top: 2%;
+  }

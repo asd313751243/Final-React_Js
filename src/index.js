@@ -7,11 +7,12 @@ import Almacen from './Pages/Almacen';
 import Sucursal from './Pages/Sucursal';
 import Empleado from './Pages/Empleado';
 import Almacen_Producto from './Pages/Almacen_Producto';
+import Sucursal_Producto from './Pages/Sucursal_Producto';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Almacen_Producto />
+    <Sucursal_Producto />
   </React.StrictMode>,
   document.getElementById('root')
 );
