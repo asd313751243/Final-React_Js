@@ -1,18 +1,18 @@
-.Producto {
+.Almacen {
     text-align: center;
     justify-content: center;
     display: flex;
     width: 100%;
   }
-  .inputproducto-wrapper{
+  .inputalmacen-wrapper{
       width: 30%;
       margin-right: 2%;
   }
 
-  .tableproducto-wrapper{
+  .tablealmacen-wrapper{
       width: 70%;
   }
 
-  .buttonproducto-wrapper{
+  .buttonalmacen-wrapper{
       margin-top: 2%;
   }
