@@ -1,0 +1,18 @@
+.Empleado {
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    width: 100%;
+  }
+  .inputempleado-wrapper{
+      width: 30%;
+      margin-right: 2%;
+  }
+
+  .tableempleado-wrapper{
+      width: 70%;
+  }
+
+  .buttonempleado-wrapper{
+      margin-top: 2%;
+  }
