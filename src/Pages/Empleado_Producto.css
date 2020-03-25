@@ -1,0 +1,18 @@
+.Empleado_Producto {
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    width: 100%;
+  }
+  .inputempleado_producto-wrapper{
+      width: 30%;
+      margin-right: 2%;
+  }
+
+  .tableempleado_producto-wrapper{
+      width: 70%;
+  }
+
+  .buttonempleado_producto-wrapper{
+      margin-top: 2%;
+  }
