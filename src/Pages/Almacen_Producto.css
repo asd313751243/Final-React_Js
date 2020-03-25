@@ -1,0 +1,18 @@
+.Almacen_Producto {
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    width: 100%;
+  }
+  .inputalmacen_producto-wrapper{
+      width: 30%;
+      margin-right: 2%;
+  }
+
+  .tablealmacen_producto-wrapper{
+      width: 70%;
+  }
+
+  .buttonalmacen_producto-wrapper{
+      margin-top: 2%;
+  }

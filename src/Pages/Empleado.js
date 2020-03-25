@@ -15,7 +15,9 @@ class Empleado extends Component {
             Usuario_Empleado: "",
             Contra_Empleado: "",
             Id_Fk_Sucursal: "",
+            // para empleado
             TableItems: [],
+            // para sucursal
             OptionItems: []
         }
     }
@@ -31,7 +33,7 @@ class Empleado extends Component {
                         <Input title="Cedula_Empleado" handleChange={this.todavia} type="number" data={this.state.Cedula_Empleado}></Input>
                         <Input title="Fecha_Nac_Empleado" handleChange={this.todavia} type="date" data={this.state.Fecha_Nac_Empleado}></Input>
                         <select className="form-control" onChange={this.todavia} required>
-                        <option value="" disabled selected hidden>---Seleccionar---</option>
+                        <option value="" disabled selected hidden>---Seleccionar Sucursal---</option>
                             {this.state.OptionItems.map((item) =>(
                                 <option value={item.Id}>{item.Id} : {item.Nombre_Sucursal} </option>
                             ))} 
