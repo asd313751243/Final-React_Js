@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import './Router.css'
 import {BrowserRouter , Route, Switch} from 'react-router-dom';
-import Nav from './Components/Nav';
+import {Link} from 'react-router-dom'
 import Vender from './Pages/Vender';
 import Producto from './Pages/Producto';
 import Almacen from './Pages/Almacen';
@@ -14,10 +15,44 @@ import Sign_In from './Pages/Sign_In';
 
 class Router extends Component{
     render(){
+        const color ={
+            color: 'white'
+        }
+
         return(
             <div>
                 <BrowserRouter>
-                <Nav/>
+                <nav>
+                    <ul className="link">
+                        <Link style={color} to="/vender">
+                        <li>Facturar</li>
+                        </Link>
+                        <Link style={color} to="/producto">
+                        <li>Producto</li>
+                        </Link>
+                        <Link style={color} to="/empleado">
+                        <li>Empleado</li>
+                        </Link>
+                        <Link style={color} to="/sucursal">
+                        <li>Sucursal</li>
+                        </Link>
+                        <Link style={color} to="/almacen">
+                        <li>Almacen</li>
+                        </Link>
+                        <Link style={color} to="/empleado_producto">
+                        <li>Empleado_Producto</li>
+                        </Link>
+                        <Link style={color} to="/sucursal_producto">
+                        <li>Sucursal_Producto</li>
+                        </Link>
+                        <Link style={color} to="/almacen_producto">
+                        <li>Almacen_Producto</li>
+                        </Link>
+                        <Link style={color} to="/log_in">
+                        <li>Log Out</li>
+                        </Link>
+                    </ul>
+                </nav>
                 <Switch>
                     <Route exact path="/" component={Log_In}></Route>
                     <Route exact path="/vender" component={Vender}></Route>

@@ -7,10 +7,14 @@ class Sucursal_Producto extends Component {
     constructor(props){
         super(props)
         this.state={
-            Id_Sucursal: "",
-            Id_Producto: "",
-            Cantidad_Sucursal_Producto: "",
-            Fecha_Sucursal_Producto: "",
+            proxyurl: "https://cors-anywhere.herokuapp.com/",
+            sucursal_producto_url: "http://asd313751243-001-site1.itempurl.com/api/sucursal_producto",
+            sucursal_url: "http://asd313751243-001-site1.itempurl.com/api/sucursal",
+            producto_url: "http://asd313751243-001-site1.itempurl.com/api/producto",
+            id_Sucursal: "",
+            id_Producto: "",
+            cantidad_Sucursal_Producto: "",
+            fecha_Sucursal_Producto: "",
             // para sucursal_producto
             TableItems: [],
             // para sucursal
@@ -20,6 +24,26 @@ class Sucursal_Producto extends Component {
         }
     }
 
+    componentDidMount(){
+        fetch(this.state.proxyurl + this.state.sucursal_producto_url)
+        .then(res => res.json())
+        .then(datos =>{
+            this.setState({TableItems: datos})
+        })
+
+        fetch(this.state.proxyurl + this.state.sucursal_url)
+        .then(res => res.json())
+        .then(datos =>{
+            this.setState({Option_1_Items: datos})
+        })
+
+        fetch(this.state.proxyurl + this.state.producto_url)
+        .then(res => res.json())
+        .then(datos =>{
+            this.setState({Option_2_Items: datos})
+        })
+    }
+
     render(){
         return(
             <div className="Sucursal_Producto">
@@ -27,43 +51,45 @@ class Sucursal_Producto extends Component {
                     <h1>Sucursal_Producto</h1>
                     <form onSubmit={this.todavia}>
                     <select className="form-control" onChange={this.todavia} required>
-                        <option value="" disabled selected hidden>---Seleccionar Sucursal---</option>
+                        <option defaultValue="" disabled selected hidden>---Seleccionar Sucursal---</option>
                             {this.state.Option_1_Items.map((item) =>(
-                                <option value={item.Id}>{item.Id} : {item.Nombre_Sucursal} </option>
+                                <option defaultValue={item.id}>{item.id} : {item.nombre_Sucursal} </option>
                             ))} 
                         </select>
                         <select className="form-control" onChange={this.todavia} required>
-                        <option value="" disabled selected hidden>---Seleccionar Producto---</option>
+                        <option defaultValue="" disabled selected hidden>---Seleccionar Producto---</option>
                             {this.state.Option_2_Items.map((item) =>(
-                                <option value={item.Id}>{item.Id} : {item.Nombre_Producto} </option>
+                                <option defaultValue={item.id}>{item.id} : {item.nombre_Producto} </option>
                             ))} 
                         </select>
-                        <Input title="Cantidad_Sucursal_Producto" handleChange={this.todavia} type="number" data={this.state.Cantidad_Sucursal_Producto}></Input>
-                        <Input title="Fecha_Sucursal_Producto" handleChange={this.todavia} type="date" data={this.state.Fecha_Sucursal_Producto}></Input>
+                        <Input title="Cantidad_Sucursal_Producto" handleChange={this.todavia} type="number" data={this.state.cantidad_Sucursal_Producto}></Input>
+                        <Input title="Fecha_Sucursal_Producto" handleChange={this.todavia} type="date" data={this.state.Fecha_sucursal_Producto}></Input>
                         <div className="buttonsucursal_producto-wrapper">
-                            <button type="submit" class="btn btn-secondary">Ejecutar</button>
+                            <button type="submit" className="btn btn-secondary">Ejecutar</button>
                         </div>
                     </form>
                 </div>
                 <div className="tablesucursal_producto-wrapper">
                     <table className="table table-striped table-dark">
                         <thead>
-                            <th>Id_Sucursal_Producto</th>
-                            <th>Id_Sucursal</th>
-                            <th>Id_Producto</th>
-                            <th>Cantidad_Sucursal_Producto</th>
-                            <th>Fecha_Sucursal_Producto</th>
+                            <tr>
+                                <th>Id_Sucursal_Producto</th>
+                                <th>Id_Sucursal</th>
+                                <th>Id_Producto</th>
+                                <th>Cantidad_Sucursal_Producto</th>
+                                <th>Fecha_Sucursal_Producto</th>
+                            </tr>
                         </thead>
                         <tbody>
                             {this.state.TableItems.map((item) => (
                                 <tr>
-                                    <td>{ item.Id }</td>
-                                    <td>{ item.Id_Sucursal }</td>
-                                    <td>{ item.Id_Producto }</td>
-                                    <td>{ item.Cantidad_Sucursal_Producto }</td>
-                                    <td>{ item.Fecha_Sucursal_Producto }</td>
-                                    <td><button type="button" class="btn btn-info"onClick={()=>this.todavia(item.Id)}>Actualizar</button></td>
-                                    <td><button type="button" class="btn btn-danger"onClick={()=>this.todavia(item.Id)}>Eliminar</button></td>
+                                    <td>{ item.id }</td>
+                                    <td>{ item.id_Sucursal }</td>
+                                    <td>{ item.id_Producto }</td>
+                                    <td>{ item.cantidad_Sucursal_Producto }</td>
+                                    <td>{ item.fecha_Sucursal_Producto }</td>
+                                    <td><button type="button" className="btn btn-info"onClick={()=>this.todavia(item.id)}>Actualizar</button></td>
+                                    <td><button type="button" className="btn btn-danger"onClick={()=>this.todavia(item.id)}>Eliminar</button></td>
                                 </tr>
                             ))}
                         </tbody>

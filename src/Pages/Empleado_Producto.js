@@ -7,10 +7,14 @@ class Empleado_Producto extends Component {
     constructor(props){
         super(props)
         this.state={
-            Id_Empleado: "",
-            Id_Producto: "",
-            Cantidad_Empleado_Producto: "",
-            Fecha_Empleado_Producto: "",
+            proxyurl: "https://cors-anywhere.herokuapp.com/",
+            empleado_producto_url: "http://asd313751243-001-site1.itempurl.com/api/empleado_producto",
+            empleado_url: "http://asd313751243-001-site1.itempurl.com/api/empleado",
+            producto_url: "http://asd313751243-001-site1.itempurl.com/api/producto",
+            id_Empleado: "",
+            id_Producto: "",
+            cantidad_Empleado_Producto: "",
+            fecha_Empleado_Producto: "",
             // para Empleado_producto
             TableItems: [],
             // para Empleado
@@ -20,6 +24,27 @@ class Empleado_Producto extends Component {
         }
     }
 
+    componentDidMount(){
+        fetch(this.state.proxyurl + this.state.empleado_producto_url)
+        .then(res => res.json())
+        .then(datos =>{
+            this.setState({TableItems: datos})
+        })
+
+        fetch(this.state.proxyurl + this.state.empleado_url)
+        .then(res => res.json())
+        .then(datos =>{
+            this.setState({Option_1_Items: datos})
+        })
+
+        fetch(this.state.proxyurl + this.state.producto_url)
+        .then(res => res.json())
+        .then(datos =>{
+            this.setState({Option_2_Items: datos})
+        })
+    }
+
+
     render(){
         return(
             <div className="Empleado_Producto">
@@ -27,41 +52,45 @@ class Empleado_Producto extends Component {
                     <h1>Empleado_Producto</h1>
                     <form onSubmit={this.todavia}>
                     <select className="form-control" onChange={this.todavia} required>
-                        <option value="" disabled selected hidden>---Seleccionar Empleado---</option>
+                        <option defaultValue="" disabled selected hidden>---Seleccionar Empleado---</option>
                             {this.state.Option_1_Items.map((item) =>(
-                                <option value={item.Id}>{item.Id} : {item.Nombre_Empleado} </option>
+                                <option defaultValue={item.id}>{item.id} : {item.nombre_Empleado} </option>
                             ))} 
                         </select>
                         <select className="form-control" onChange={this.todavia} required>
-                        <option value="" disabled selected hidden>---Seleccionar Producto---</option>
+                        <option defaultValue="" disabled selected hidden>---Seleccionar Producto---</option>
                             {this.state.Option_2_Items.map((item) =>(
-                                <option value={item.Id}>{item.Id} : {item.Nombre_Producto} </option>
+                                <option defaultValue={item.id}>{item.id} : {item.nombre_Producto} </option>
                             ))} 
                         </select>
-                        <Input title="Cantidad_Empleado_Producto" handleChange={this.todavia} type="number" data={this.state.Cantidad_Empleado_Producto}></Input>                    
-                        <Input title="Fecha_Empleado_Producto" handleChange={this.todavia} type="date" data={this.state.Fecha_Empleado_Producto}></Input>
+                        <Input title="Cantidad_Empleado_Producto" handleChange={this.todavia} type="number" data={this.state.cantidad_Empleado_Producto}></Input>                    
+                        <Input title="Fecha_Empleado_Producto" handleChange={this.todavia} type="date" data={this.state.fecha_Empleado_Producto}></Input>
                         <div className="buttonempleado_producto-wrapper">
-                            <button type="submit" class="btn btn-secondary">Ejecutar</button>
+                            <button type="submit" className="btn btn-secondary">Ejecutar</button>
                         </div>
                     </form>
                 </div>
                 <div className="tableempleado_producto-wrapper">
                     <table className="table table-striped table-dark">
                         <thead>
-                            <th>Id_Empleado_Producto</th>
-                            <th>Id_Empleado</th>
-                            <th>Id_Producto</th>
-                            <th>Fecha_Empleado_Producto</th>
+                            <tr>
+                                <th>Id_Empleado_Producto</th>
+                                <th>Id_Empleado</th>
+                                <th>Id_Producto</th>
+                                <th>Cantidad_Empleado_Producto</th>
+                                <th>Fecha_Empleado_Producto</th>
+                            </tr>
                         </thead>
                         <tbody>
                             {this.state.TableItems.map((item) => (
                                 <tr>
-                                    <td>{ item.Id }</td>
-                                    <td>{ item.Id_Empleado }</td>
-                                    <td>{ item.Id_Producto }</td>
-                                    <td>{ item.Fecha_Empleado_Producto }</td>
-                                    <td><button type="button" class="btn btn-info"onClick={()=>this.todavia(item.Id)}>Actualizar</button></td>
-                                    <td><button type="button" class="btn btn-danger"onClick={()=>this.todavia(item.Id)}>Eliminar</button></td>
+                                    <td>{ item.id }</td>
+                                    <td>{ item.id_Empleado }</td>
+                                    <td>{ item.id_Producto }</td>
+                                    <td>{ item.cantidad_Empleado_Producto }</td>
+                                    <td>{ item.fecha_Empleado_Producto }</td>
+                                    <td><button type="button" className="btn btn-info"onClick={()=>this.todavia(item.id)}>Actualizar</button></td>
+                                    <td><button type="button" className="btn btn-danger"onClick={()=>this.todavia(item.id)}>Eliminar</button></td>
                                 </tr>
                             ))}
                         </tbody>

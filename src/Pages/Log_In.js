@@ -8,10 +8,20 @@ class Log_In extends Component{
     constructor(props){
         super(props)
         this.state={
-            Usuario_Empleado: "",
-            Contra_Empleado: "",
+            proxyurl: "https://cors-anywhere.herokuapp.com/",
+            empleado_url: "http://asd313751243-001-site1.itempurl.com/api/empleado",
+            usuario_Empleado: "",
+            contra_Empleado: "",
             VerifiedItems: []
         }
+    }
+
+    componentDidMount(){
+        fetch(this.state.proxyurl + this.state.empleado_url)
+        .then(res => res.json())
+        .then(datos =>{
+            this.setState({VerifiedItems: datos})
+        })
     }
 
     render(){
@@ -21,11 +31,11 @@ class Log_In extends Component{
                     <h1>Log_In</h1>
                     <p></p>
                     <form>
-                        <Input title="Usuario" handleChange={this.todavia} type="text" data={this.state.Usuario_Empleado}></Input>
+                        <Input title="Usuario" handleChange={this.todavia} type="text" data={this.state.usuario_Empleado}></Input>
                         <p></p>
-                        <Input title="Contraseña" handleChange={this.todavia} type="text" data={this.state.Contra_Empleado}></Input>
+                        <Input title="Contraseña" handleChange={this.todavia} type="text" data={this.state.contra_Empleado}></Input>
                         <div className="buttonlog_in-wrapper">
-                            <button type="submit" class="btn btn-primary">Log In</button>
+                            <button type="submit" className="btn btn-primary">Log In</button>
                             <p></p>
                             <p>
                                 <Link to="/sign_in">
