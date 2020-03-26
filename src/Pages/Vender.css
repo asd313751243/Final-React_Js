@@ -1,0 +1,26 @@
+.Vender {
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    width: 100%;
+  }
+  .inputvender-wrapper{
+      width: 30%;
+      margin-right: 2%;
+  }
+
+  .tablevender-wrapper{
+      width: 70%;
+  }
+
+  .buttonvender-wrapper{
+      margin-top: 2%;
+  }
+
+  .total-wrapper{
+    display: flex;
+  }
+
+  .buttontotal-wrapper{
+      float: right;
+  }

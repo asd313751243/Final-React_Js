@@ -9,6 +9,7 @@ class Empleado_Producto extends Component {
         this.state={
             Id_Empleado: "",
             Id_Producto: "",
+            Cantidad_Empleado_Producto: "",
             Fecha_Empleado_Producto: "",
             // para Empleado_producto
             TableItems: [],
@@ -36,7 +37,8 @@ class Empleado_Producto extends Component {
                             {this.state.Option_2_Items.map((item) =>(
                                 <option value={item.Id}>{item.Id} : {item.Nombre_Producto} </option>
                             ))} 
-                        </select>                    
+                        </select>
+                        <Input title="Cantidad_Empleado_Producto" handleChange={this.todavia} type="number" data={this.state.Cantidad_Empleado_Producto}></Input>                    
                         <Input title="Fecha_Empleado_Producto" handleChange={this.todavia} type="date" data={this.state.Fecha_Empleado_Producto}></Input>
                         <div className="buttonempleado_producto-wrapper">
                             <button type="submit" class="btn btn-secondary">Ejecutar</button>

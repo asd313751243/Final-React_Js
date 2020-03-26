@@ -31,7 +31,6 @@ class Log_In extends Component{
             </div>
         )
     }
-
 }
 
 export default Log_In;

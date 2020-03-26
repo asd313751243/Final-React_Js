@@ -11,11 +11,12 @@ import Sucursal_Producto from './Pages/Sucursal_Producto';
 import Empleado_Producto from './Pages/Empleado_Producto';
 import Log_In from './Pages/Log_In';
 import Sign_In from './Pages/Sign_In';
+import Vender from './Pages/Vender';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Sign_In />
+    <Vender />
   </React.StrictMode>,
   document.getElementById('root')
 );
