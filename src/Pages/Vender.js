@@ -38,7 +38,7 @@ class Vender extends Component {
                 </div>
                 <div className="tablevender-wrapper">
                     <table className="table">
-                        <thead>
+                        <thead className="thead-dark">
                             <th>Id_Vender</th>
                             <th>Cantidad</th>
                             <th>Nombre_Producto</th>

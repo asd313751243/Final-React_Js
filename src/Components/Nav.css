@@ -1,0 +1,14 @@
+nav{
+    align-items: center;
+    height: 8vh;
+    width: 100%;
+    background-color: rgb(33, 57, 77);
+}
+
+.link{
+    display: flex;
+    margin-right: 4%;
+    justify-content: space-around;
+    align-items: center;
+    list-style: none;
+}

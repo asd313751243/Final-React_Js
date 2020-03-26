@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router-dom';
 import './Sign_In.css';
 import Input from '../Components/Input';
 
@@ -25,6 +26,9 @@ class Sign_In extends Component{
     render(){
         return(
             <div className="Sign_In">
+                <Link to="/log_in">
+                    <button type="submit" class="btn btn-secondary">Back</button>
+                </Link>
                 <div className="inputsign_in-wrapper">
                     <h1>Sign_In</h1>
                     <p></p>
@@ -46,7 +50,9 @@ class Sign_In extends Component{
                         <Input title="Usuario" handleChange={this.todavia} type="text" data={this.state.Usuario_Empleado}></Input>
                         <Input title="Contraseña" handleChange={this.todavia} type="text" data={this.state.Contra_Empleado}></Input>
                         <div className="buttonsign_in-wrapper">
-                            <button type="submit" class="btn btn-primary">Sign In</button>
+                            <Link to="/log_in">
+                                <button type="submit" class="btn btn-primary" onClick={this.todavia}>Registrar</button>
+                            </Link>
                         </div>
                     </form>
                 </div>

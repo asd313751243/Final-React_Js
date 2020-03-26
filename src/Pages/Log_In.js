@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Link } from 'react-router-dom';
 import './Log_In.css';
 import Input from '../Components/Input';
 
@@ -25,6 +26,13 @@ class Log_In extends Component{
                         <Input title="Contraseña" handleChange={this.todavia} type="text" data={this.state.Contra_Empleado}></Input>
                         <div className="buttonlog_in-wrapper">
                             <button type="submit" class="btn btn-primary">Log In</button>
+                            <p></p>
+                            <p>
+                                <Link to="/sign_in">
+                                    <a>Registrar usuario</a>
+                                </Link>
+                            </p>
+                            
                         </div>
                     </form>
                 </div>

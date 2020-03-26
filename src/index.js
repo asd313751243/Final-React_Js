@@ -1,22 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
-import Producto from './Pages/Producto';
-import Almacen from './Pages/Almacen';
-import Sucursal from './Pages/Sucursal';
-import Empleado from './Pages/Empleado';
-import Almacen_Producto from './Pages/Almacen_Producto';
-import Sucursal_Producto from './Pages/Sucursal_Producto';
-import Empleado_Producto from './Pages/Empleado_Producto';
-import Log_In from './Pages/Log_In';
-import Sign_In from './Pages/Sign_In';
-import Vender from './Pages/Vender';
+import Router from './Router'
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Vender />
+    <Router />
   </React.StrictMode>,
   document.getElementById('root')
 );
