@@ -25,6 +25,10 @@ class Sucursal_Producto extends Component {
     }
 
     componentDidMount(){
+        this.Get();
+    }
+
+    Get = () =>{
         fetch(this.state.proxyurl + this.state.sucursal_producto_url)
         .then(res => res.json())
         .then(datos =>{
@@ -44,26 +48,32 @@ class Sucursal_Producto extends Component {
         })
     }
 
+    ToState = (e) =>{
+        let partialState = {};
+        partialState[e.target.title] = e.target.value;
+        this.setState(partialState);
+    }
+
     render(){
         return(
             <div className="Sucursal_Producto">
                 <div className="inputsucursal_producto-wrapper">
                     <h1>Sucursal_Producto</h1>
                     <form onSubmit={this.todavia}>
-                    <select className="form-control" onChange={this.todavia} required>
+                    <select className="form-control" onChange={this.ToState} required>
                         <option defaultValue="" disabled selected hidden>---Seleccionar Sucursal---</option>
                             {this.state.Option_1_Items.map((item) =>(
                                 <option defaultValue={item.id}>{item.id} : {item.nombre_Sucursal} </option>
                             ))} 
                         </select>
-                        <select className="form-control" onChange={this.todavia} required>
+                        <select className="form-control" onChange={this.ToState} required>
                         <option defaultValue="" disabled selected hidden>---Seleccionar Producto---</option>
                             {this.state.Option_2_Items.map((item) =>(
                                 <option defaultValue={item.id}>{item.id} : {item.nombre_Producto} </option>
                             ))} 
                         </select>
-                        <Input title="Cantidad_Sucursal_Producto" handleChange={this.todavia} type="number" data={this.state.cantidad_Sucursal_Producto}></Input>
-                        <Input title="Fecha_Sucursal_Producto" handleChange={this.todavia} type="date" data={this.state.Fecha_sucursal_Producto}></Input>
+                        <Input title="Cantidad_Sucursal_Producto" handleChange={this.ToState} type="number" data={this.state.Cantidad_Sucursal_Producto}></Input>
+                        <Input title="Fecha_Sucursal_Producto" handleChange={this.ToState} type="date" data={this.state.Fecha_Sucursal_Producto}></Input>
                         <div className="buttonsucursal_producto-wrapper">
                             <button type="submit" className="btn btn-secondary">Ejecutar</button>
                         </div>

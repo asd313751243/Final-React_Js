@@ -9,19 +9,26 @@ class Sucursal extends Component {
         this.state={
             proxyurl: "https://cors-anywhere.herokuapp.com/",
             url: "http://asd313751243-001-site1.itempurl.com/api/sucursal",
-            nombre_Sucursal: "",
-            ciudad_Sucursal: "",
-            telefono_Sucursal: "",
             TableItems: []
         }
     }
 
     componentDidMount(){
+        this.Get();
+    }
+
+    Get = () =>{
         fetch(this.state.proxyurl + this.state.url)
         .then(res => res.json())
         .then(datos =>{
             this.setState({TableItems: datos})
         })
+    }
+
+    ToState = (e) =>{
+        let partialState = {};
+        partialState[e.target.title] = e.target.value;
+        this.setState(partialState);
     }
 
     render(){
@@ -30,9 +37,9 @@ class Sucursal extends Component {
                 <div className="inputsucursal-wrapper">
                     <h1>Sucursal</h1>
                     <form onSubmit={this.todavia}>
-                        <Input title="Nombre_Sucursal" handleChange={this.todavia} type="text" data={this.state.nombre_Sucursal}></Input>
-                        <Input title="Ciudad_Sucursal" handleChange={this.todavia} type="text" data={this.state.ciudad_Sucursal}></Input>
-                        <Input title="Telefono_Sucursal" handleChange={this.todavia} type="number" data={this.state.telefono_Sucursal}></Input>
+                        <Input title="Nombre_Sucursal" handleChange={this.ToState} type="text" data={this.state.Nombre_Sucursal}></Input>
+                        <Input title="Ciudad_Sucursal" handleChange={this.ToState} type="text" data={this.state.Ciudad_Sucursal}></Input>
+                        <Input title="Telefono_Sucursal" handleChange={this.ToState} type="number" data={this.state.Telefono_Sucursal}></Input>
                         <div className="buttonsucursal-wrapper">
                             <button type="submit" className="btn btn-secondary">Ejecutar</button>
                         </div>

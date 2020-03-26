@@ -11,10 +11,6 @@ class Empleado_Producto extends Component {
             empleado_producto_url: "http://asd313751243-001-site1.itempurl.com/api/empleado_producto",
             empleado_url: "http://asd313751243-001-site1.itempurl.com/api/empleado",
             producto_url: "http://asd313751243-001-site1.itempurl.com/api/producto",
-            id_Empleado: "",
-            id_Producto: "",
-            cantidad_Empleado_Producto: "",
-            fecha_Empleado_Producto: "",
             // para Empleado_producto
             TableItems: [],
             // para Empleado
@@ -25,6 +21,10 @@ class Empleado_Producto extends Component {
     }
 
     componentDidMount(){
+        this.Get();
+    }
+
+    Get = () =>{
         fetch(this.state.proxyurl + this.state.empleado_producto_url)
         .then(res => res.json())
         .then(datos =>{
@@ -44,6 +44,11 @@ class Empleado_Producto extends Component {
         })
     }
 
+    ToState = (e) =>{
+        let partialState = {};
+        partialState[e.target.title] = e.target.value;
+        this.setState(partialState);
+    }
 
     render(){
         return(
@@ -63,7 +68,7 @@ class Empleado_Producto extends Component {
                                 <option defaultValue={item.id}>{item.id} : {item.nombre_Producto} </option>
                             ))} 
                         </select>
-                        <Input title="Cantidad_Empleado_Producto" handleChange={this.todavia} type="number" data={this.state.cantidad_Empleado_Producto}></Input>                    
+                        <Input title="Cantidad_Empleado_Producto" handleChange={this.todavia} type="number" data={this.state.Cantidad_Empleado_Producto}></Input>                    
                         <Input title="Fecha_Empleado_Producto" handleChange={this.todavia} type="date" data={this.state.fecha_Empleado_Producto}></Input>
                         <div className="buttonempleado_producto-wrapper">
                             <button type="submit" className="btn btn-secondary">Ejecutar</button>

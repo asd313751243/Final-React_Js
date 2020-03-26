@@ -10,14 +10,8 @@ class Empleado extends Component {
             proxyurl: "https://cors-anywhere.herokuapp.com/",
             empleado_url: "http://asd313751243-001-site1.itempurl.com/api/empleado",
             sucursal_url: "http://asd313751243-001-site1.itempurl.com/api/sucursal",
-            nombre_Empleado: "",
-            sexo_Empleado: "",
-            cedula_Empleado: "",
-            fecha_Nac_Empleado: "",
-            telefono_Empleado: "",
             usuario_Empleado: "",
             contra_Empleado: "",
-            id_Fk_Sucursal: "",
             // para empleado
             TableItems: [],
             // para sucursal
@@ -26,6 +20,10 @@ class Empleado extends Component {
     }
 
     componentDidMount(){
+        this.Get();
+    }
+
+    Get = () =>{
         fetch(this.state.proxyurl + this.state.empleado_url)
         .then(res => res.json())
         .then(datos =>{
@@ -39,17 +37,24 @@ class Empleado extends Component {
         })
     }
 
+    ToState = (e) =>{
+        let partialState = {};
+        
+        partialState[e.target.title] = e.target.value;
+        this.setState(partialState)
+    }
+
     render(){
         return(
             <div className="Empleado">
                 <div className="inputempleado-wrapper">
                     <h1>Empleado</h1>
                     <form onSubmit={this.todavia}>
-                        <Input title="Nombre_Empleado" handleChange={this.todavia} type="text" data={this.state.nombre_Empleado}></Input>
-                        <Input title="Sexo_Empleado" handleChange={this.todavia} type="text" data={this.state.sexo_Empleado}></Input>
-                        <Input title="Cedula_Empleado" handleChange={this.todavia} type="number" data={this.state.cedula_Empleado}></Input>
-                        <Input title="Fecha_Nac_Empleado" handleChange={this.todavia} type="date" data={this.state.fecha_Nac_Empleado}></Input>
-                        <select className="form-control" onChange={this.todavia} required>
+                        <Input title="Nombre_Empleado" handleChange={this.ToState} type="text" data={this.state.Nombre_Empleado}></Input>
+                        <Input title="Sexo_Empleado" handleChange={this.ToState} type="text" data={this.state.Sexo_Empleado}></Input>
+                        <Input title="Cedula_Empleado" handleChange={this.ToState} type="number" data={this.state.Cedula_Empleado}></Input>
+                        <Input title="Fecha_Nac_Empleado" handleChange={this.ToState} type="date" data={this.state.Fecha_Nac_Empleado}></Input>
+                        <select className="form-control" onChange={this.ToState} required>
                         <option defaultValue="" disabled selected hidden>---Seleccionar Sucursal---</option>
                             {this.state.OptionItems.map((item) =>(
                                 <option defaultValue={item.id}>{item.id} : {item.nombre_Sucursal} </option>

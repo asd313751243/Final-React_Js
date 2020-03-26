@@ -11,10 +11,6 @@ class Almacen_Producto extends Component {
             almacen_producto_url: "http://asd313751243-001-site1.itempurl.com/api/almacen_producto",
             almacen_url: "http://asd313751243-001-site1.itempurl.com/api/almacen",
             producto_url: "http://asd313751243-001-site1.itempurl.com/api/producto",
-            id_Almacen: "",
-            id_Producto: "",
-            cantidad_Almacen_Producto: "",
-            fecha_Almacen_Producto: "",
             // para almacen_producto
             TableItems: [],
             // para almacen
@@ -25,6 +21,10 @@ class Almacen_Producto extends Component {
     }
 
     componentDidMount(){
+        this.Get();
+    }
+
+    Get = () =>{
         fetch(this.state.proxyurl + this.state.almacen_producto_url)
         .then(res => res.json())
         .then(datos =>{
@@ -44,26 +44,32 @@ class Almacen_Producto extends Component {
         })
     }
 
+    ToState = (e) =>{
+        let partialState = {};
+        partialState[e.target.title] = e.target.value;
+        this.setState(partialState);
+    }
+
     render(){
         return(
             <div className="Almacen_Producto">
                 <div className="inputalmacen_producto-wrapper">
                     <h1>Almacen_Producto</h1>
                     <form onSubmit={this.todavia}>
-                    <select className="form-control" onChange={this.todavia} required>
+                    <select className="form-control" onChange={this.ToState} required>
                         <option defaultValue="" disabled selected hidden>---Seleccionar Almacen---</option>
                             {this.state.Option_1_Items.map((item) =>(
                                 <option defaultValue={item.id}>{item.id} : {item.nombre_Almacen} </option>
                             ))} 
                         </select>
-                        <select className="form-control" onChange={this.todavia} required>
+                        <select className="form-control" onChange={this.ToState} required>
                         <option defaultValue="" disabled selected hidden>---Seleccionar Producto---</option>
                             {this.state.Option_2_Items.map((item) =>(
                                 <option defaultValue={item.id}>{item.id} : {item.nombre_Producto} </option>
                             ))} 
                         </select>
-                        <Input title="Cantidad_Almacen_Producto" handleChange={this.todavia} type="number" data={this.state.cantidad_Almacen_Producto}></Input>
-                        <Input title="Fecha_Almacen_Producto" handleChange={this.todavia} type="date" data={this.state.fecha_Almacen_Producto}></Input>
+                        <Input title="Cantidad_Almacen_Producto" handleChange={this.ToState} type="number" data={this.state.Cantidad_Almacen_Producto}></Input>
+                        <Input title="Fecha_Almacen_Producto" handleChange={this.ToState} type="date" data={this.state.Fecha_Almacen_Producto}></Input>
                         <div className="buttonalmacen_producto-wrapper">
                             <button type="submit" className="btn btn-secondary">Ejecutar</button>
                         </div>

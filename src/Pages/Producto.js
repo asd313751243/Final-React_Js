@@ -9,20 +9,26 @@ class Producto extends Component {
         this.state={
             proxyurl: "https://cors-anywhere.herokuapp.com/",
             url: "http://asd313751243-001-site1.itempurl.com/api/producto",
-            nombre_Producto: "",
-            precio_Producto: "",
-            cantidad_Producto: "",
-            fecha_Venc_Producto: "",
             TableItems: []
         }
     }
 
     componentDidMount(){
+        this.Get();
+    }
+
+    Get = () =>{
         fetch(this.state.proxyurl + this.state.url)
         .then(res => res.json())
         .then(datos =>{
             this.setState({TableItems: datos})
         })
+    }
+
+    ToState = (e) =>{
+        let partialState = {};
+        partialState[e.target.title] = e.target.value;
+        this.setState(partialState);
     }
 
     render(){
@@ -31,10 +37,10 @@ class Producto extends Component {
                 <div className="inputproducto-wrapper">
                     <h1>Producto</h1>
                     <form onSubmit={this.todavia}>
-                        <Input title="Nombre_Producto" handleChange={this.todavia} type="text" data={this.state.nombre_Producto}></Input>
-                        <Input title="Precio_Producto" handleChange={this.todavia} type="number" data={this.state.precio_Producto}></Input>
-                        <Input title="Cantidad_Producto" handleChange={this.todavia} type="number" data={this.state.cantidad_Producto}></Input>
-                        <Input title="Fecha_Venc_Producto" handleChange={this.todavia} type="date" data={this.state.fecha_Venc_Producto}></Input>
+                        <Input title="Nombre_Producto" handleChange={this.ToState} type="text" data={this.state.Nombre_Producto}></Input>
+                        <Input title="Precio_Producto" handleChange={this.ToState} type="number" data={this.state.Precio_Producto}></Input>
+                        <Input title="Cantidad_Producto" handleChange={this.ToState} type="number" data={this.state.Cantidad_Producto}></Input>
+                        <Input title="Fecha_Venc_Producto" handleChange={this.ToState} type="date" data={this.state.Fecha_Venc_Producto}></Input>
                         <div className="buttonproducto-wrapper">
                             <button type="submit" className="btn btn-secondary">Ejecutar</button>
                         </div>

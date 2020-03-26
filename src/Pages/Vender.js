@@ -9,8 +9,6 @@ class Vender extends Component {
         this.state={
             proxyurl: "https://cors-anywhere.herokuapp.com/",
             url: "http://asd313751243-001-site1.itempurl.com/api/producto",
-            Id_Producto: "",
-            Cantidad_Empleado_Producto: "",
             Fecha_Empleado_Producto: "",
             Sub_Total: 0,
             Total: 0,
@@ -21,11 +19,21 @@ class Vender extends Component {
     }
 
     componentDidMount(){
+        this.Get();
+    }
+
+    Get = () =>{
         fetch(this.state.proxyurl + this.state.url)
         .then(res => res.json())
         .then(datos =>{
             this.setState({TableItems: datos})
         })
+    }
+
+    ToState = (e) =>{
+        let partialState = {};
+        partialState[e.target.title] = e.target.value;
+        this.setState(partialState);
     }
 
     render(){
@@ -34,13 +42,13 @@ class Vender extends Component {
                 <div className="inputvender-wrapper">
                     <h1>Facturar</h1>
                     <form onSubmit={this.todavia}>
-                        <select className="form-control" onChange={this.todavia} required>
+                        <select className="form-control" onChange={this.ToState} required>
                             <option defaultvalue="" disabled selected hidden>---Seleccionar Producto---</option>
                                 {this.state.OptionItems.map((item) =>(
                                     <option dafaultValue={item.Id}>{item.Id} : {item.Nombre_Producto} </option>
                                 ))} 
                         </select>
-                        <Input title="Cantidad_Empleado_Producto" handleChange={this.todavia} type="number" data={this.state.Cantidad_Empleado_Producto}></Input>
+                        <Input title="Cantidad_Empleado_Producto" handleChange={this.ToState} type="number" data={this.state.Cantidad_Empleado_Producto}></Input>
                         <div className="buttonvender-wrapper">
                             <button type="submit" className="btn btn-secondary">Ejecutar</button>
                         </div>

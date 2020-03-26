@@ -8,7 +8,7 @@ const Input = (props) => (
         title={props.title}
         onChange={props.handleChange}
         placeholder={props.title}
-        //value={props.data}
+        value={props.data}
         required />
     </div>
 )
