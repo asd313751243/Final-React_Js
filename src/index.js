@@ -9,11 +9,12 @@ import Empleado from './Pages/Empleado';
 import Almacen_Producto from './Pages/Almacen_Producto';
 import Sucursal_Producto from './Pages/Sucursal_Producto';
 import Empleado_Producto from './Pages/Empleado_Producto';
+import Log_In from './Pages/Log_In';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Empleado_Producto />
+    <Log_In />
   </React.StrictMode>,
   document.getElementById('root')
 );
