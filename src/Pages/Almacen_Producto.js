@@ -11,6 +11,8 @@ class Almacen_Producto extends Component {
             almacen_producto_url: "http://asd313751243-001-site1.itempurl.com/api/almacen_producto",
             almacen_url: "http://asd313751243-001-site1.itempurl.com/api/almacen",
             producto_url: "http://asd313751243-001-site1.itempurl.com/api/producto",
+            PUT: "false",
+            valor: 0,
             // para almacen_producto
             TableItems: [],
             // para almacen
@@ -47,28 +49,59 @@ class Almacen_Producto extends Component {
         })
     }
 
-    PostInputItems = () =>{
-
-        fetch(this.state.proxyurl + this.state.almacen_producto_url,
-            {
-            
-            headers:{
-                'Content-Type': 'application/json'
-            },
-            method: 'POST',
-            body: JSON.stringify({
-                id_Almacen: this.state.Id_Almacen,
-                id_Producto: this.state.Id_Producto,
-                cantidad_Almacen_Producto: this.state.Cantidad_Almacen_Producto,
-                fecha_Almacen_Producto: this.state.Fecha_Almacen_Producto
+    ToApi = (val) =>{
+        if(this.state.PUT === "false"){
+            fetch(this.state.proxyurl + this.state.almacen_producto_url,
+                {
+                
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                method: 'POST',
+                body: JSON.stringify({
+                    id_Almacen: this.state.Id_Almacen,
+                    id_Producto: this.state.Id_Producto,
+                    cantidad_Almacen_Producto: this.state.Cantidad_Almacen_Producto,
+                    fecha_Almacen_Producto: this.state.Fecha_Almacen_Producto
+                })
             })
-        })
+        }
+        else if(this.state.PUT === "true"){
+            fetch(this.state.proxyurl + this.state.almacen_producto_url +"/"+ this.state.valor,
+                {
+                
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                method: 'PUT',
+                body: JSON.stringify({
+                    id: this.state.valor,
+                    id_Almacen: this.state.Id_Almacen,
+                    id_Producto: this.state.Id_Producto,
+                    cantidad_Almacen_Producto: this.state.Cantidad_Almacen_Producto,
+                    fecha_Almacen_Producto: this.state.Fecha_Almacen_Producto
+                })
+            })
+            this.setState({PUT:"false"})
+        }
+
         this.GetTableItems();
+            this.setState({
+                Id_Almacen: "",
+                Id_Producto: "",
+                Cantidad_Almacen_Producto: "",
+                Fecha_Almacen_Producto: ""
+            })
+    }
+
+    ToFillInputs = (val) =>{
         this.setState({
-            Id_Almacen: "",
-            Id_Producto: "",
-            Cantidad_Almacen_Producto: "",
-            Fecha_Almacen_Producto: ""
+            Id_Almacen: this.state.TableItems[parseInt(val)-1].id_Almacen,
+            Id_Producto: this.state.TableItems[parseInt(val)-1].id_Producto,
+            Cantidad_Almacen_Producto: this.state.TableItems[parseInt(val)-1].cantidad_Almacen_Producto,
+            Fecha_Almacen_Producto: this.state.TableItems[parseInt(val)-1].fecha_Almacen_Producto,
+            PUT: "true",
+            valor: val
         })
     }
 
@@ -83,21 +116,21 @@ class Almacen_Producto extends Component {
             <div className="Almacen_Producto">
                 <div className="inputalmacen_producto-wrapper">
                     <h1>Almacen_Producto</h1>
-                    <form onSubmit={this.PostInputItems}>
+                    <form onSubmit={this.ToApi}>
                     <select className="form-control" title="Id_Almacen" onChange={this.ToState} required>
                         <option defaultValue="" disabled selected hidden>---Seleccionar Almacen---</option>
                             {this.state.Option_1_Items.map((item) =>(
-                                <option type="text" value={item.id}>{item.id} : {item.nombre_Almacen} </option>
+                                <option value={item.id}>{item.id} : {item.nombre_Almacen} </option>
                             ))} 
                         </select>
                         <select className="form-control" title="Id_Producto" onChange={this.ToState} required>
                         <option defaultValue="" disabled selected hidden>---Seleccionar Producto---</option>
                             {this.state.Option_2_Items.map((item) =>(
-                                <option type="text" value={item.id}>{item.id} : {item.nombre_Producto} </option>
+                                <option value={item.id}>{item.id} : {item.nombre_Producto} </option>
                             ))} 
                         </select>
-                        <Input title="Cantidad_Almacen_Producto" handleChange={this.ToState} type="text" data={this.state.Cantidad_Almacen_Producto}></Input>
-                        <Input title="Fecha_Almacen_Producto" handleChange={this.ToState} type="text" data={this.state.Fecha_Almacen_Producto}></Input>
+                        <Input title="Cantidad_Almacen_Producto" handleChange={this.ToState} type="number" data={this.state.Cantidad_Almacen_Producto}></Input>
+                        <Input title="Fecha_Almacen_Producto" handleChange={this.ToState} type="date" data={this.state.Fecha_Almacen_Producto}></Input>
                         <div className="buttonalmacen_producto-wrapper">
                             <button type="submit" className="btn btn-secondary">Ejecutar</button>
                         </div>
@@ -122,7 +155,7 @@ class Almacen_Producto extends Component {
                                     <td>{ item.id_Producto }</td>
                                     <td>{ item.cantidad_Almacen_Producto }</td>
                                     <td>{ item.fecha_Almacen_Producto }</td>
-                                    <td><button type="button" className="btn btn-info"onClick={()=>this.todavia(item.id)}>Actualizar</button></td>
+                                    <td><button type="button" className="btn btn-info"onClick={()=>this.ToFillInputs(item.id)}>Actualizar</button></td>
                                     <td><button type="button" className="btn btn-danger"onClick={()=>this.todavia(item.id)}>Eliminar</button></td>
                                 </tr>
                             ))}

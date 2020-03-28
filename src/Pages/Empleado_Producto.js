@@ -11,6 +11,8 @@ class Empleado_Producto extends Component {
             empleado_producto_url: "http://asd313751243-001-site1.itempurl.com/api/empleado_producto",
             empleado_url: "http://asd313751243-001-site1.itempurl.com/api/empleado",
             producto_url: "http://asd313751243-001-site1.itempurl.com/api/producto",
+            PUT: "false",
+            valor: 0,
             // para Empleado_producto
             TableItems: [],
             // para Empleado
@@ -47,28 +49,56 @@ class Empleado_Producto extends Component {
         })
     }
 
-    PostInputItems = () =>{
-
-        fetch(this.state.proxyurl + this.state.empleado_producto_url,
-            {
-            
-            headers:{
-                'Content-Type': 'application/json'
-            },
-            method: 'POST',
-            body: JSON.stringify({
-                id_Empleado: this.state.Id_Empleado,
-                id_Producto: this.state.Id_Producto,
-                cantidad_Empleado_Producto: this.state.Cantidad_Empleado_Producto,
-                fecha_Empleado_Producto: this.state.Fecha_Empleado_Producto
+    ToApi = () =>{
+        if(this.state.PUT === "false"){
+            fetch(this.state.proxyurl + this.state.empleado_producto_url,
+                {
+                
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                method: 'POST',
+                body: JSON.stringify({
+                    id_Empleado: this.state.Id_Empleado,
+                    id_Producto: this.state.Id_Producto,
+                    cantidad_Empleado_Producto: this.state.Cantidad_Empleado_Producto,
+                })
             })
-        })
+        }
+        else if(this.state.PUT === "true"){
+            fetch(this.state.proxyurl + this.state.empleado_producto_url +"/"+ this.state.valor,
+                {
+                
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                method: 'PUT',
+                body: JSON.stringify({
+                    id: this.state.valor,
+                    id_Empleado: this.state.Id_Empleado,
+                    id_Producto: this.state.Id_Producto,
+                    cantidad_Empleado_Producto: this.state.Cantidad_Empleado_Producto,
+                })
+            })
+            this.setState({PUT: "false"})
+        }
         this.GetTableItems();
+            this.setState({
+                Id_Empleado: "",
+                Id_Producto: "",
+                Cantidad_Empleado_Producto: "",
+                Fecha_Empleado_Producto: ""
+            })
+    }
+
+    ToFillInputs = (val) =>{
         this.setState({
-            Id_Empleado: "",
-            Id_Producto: "",
-            Cantidad_Empleado_Producto: "",
-            Fecha_Empleado_Producto: ""
+            Id_Empleado: this.state.TableItems[parseInt(val)-1].id_Empleado,
+            Id_Producto: this.state.TableItems[parseInt(val)-1].id_Producto,
+            Cantidad_Empleado_Producto: this.state.TableItems[parseInt(val)-1].cantidad_Empleado_Producto,
+            Fecha_Empleado_Producto: this.state.TableItems[parseInt(val)-1].fecha_Empleado_Producto,
+            PUT: "true",
+            valor: val
         })
     }
 
@@ -83,21 +113,20 @@ class Empleado_Producto extends Component {
             <div className="Empleado_Producto">
                 <div className="inputempleado_producto-wrapper">
                     <h1>Empleado_Producto</h1>
-                    <form onSubmit={this.PostInputItems}>
+                    <form onSubmit={this.ToApi}>
                     <select className="form-control" title="Id_Empleado" onChange={this.ToState} required>
                         <option defaultValue="" disabled selected hidden>---Seleccionar Empleado---</option>
                             {this.state.Option_1_Items.map((item) =>(
-                                <option type="text" value={item.id}>{item.id} : {item.nombre_Empleado} </option>
+                                <option value={item.id}>{item.id} : {item.nombre_Empleado} </option>
                             ))} 
                         </select>
                         <select className="form-control" title="Id_Producto" onChange={this.ToState} required>
                         <option defaultValue="" disabled selected hidden>---Seleccionar Producto---</option>
                             {this.state.Option_2_Items.map((item) =>(
-                                <option type="text" value={item.id}>{item.id} : {item.nombre_Producto} </option>
+                                <option value={item.id}>{item.id} : {item.nombre_Producto} </option>
                             ))} 
                         </select>
-                        <Input title="Cantidad_Empleado_Producto" handleChange={this.ToState} type="text" data={this.state.Cantidad_Empleado_Producto}></Input>                    
-                        <Input title="Fecha_Empleado_Producto" handleChange={this.ToState} type="text" data={this.state.fecha_Empleado_Producto}></Input>
+                        <Input title="Cantidad_Empleado_Producto" handleChange={this.ToState} type="number" data={this.state.Cantidad_Empleado_Producto}></Input>                    
                         <div className="buttonempleado_producto-wrapper">
                             <button type="submit" className="btn btn-secondary">Ejecutar</button>
                         </div>
@@ -111,7 +140,6 @@ class Empleado_Producto extends Component {
                                 <th>Id_Empleado</th>
                                 <th>Id_Producto</th>
                                 <th>Cantidad_Empleado_Producto</th>
-                                <th>Fecha_Empleado_Producto</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -121,8 +149,7 @@ class Empleado_Producto extends Component {
                                     <td>{ item.id_Empleado }</td>
                                     <td>{ item.id_Producto }</td>
                                     <td>{ item.cantidad_Empleado_Producto }</td>
-                                    <td>{ item.fecha_Empleado_Producto }</td>
-                                    <td><button type="button" className="btn btn-info"onClick={()=>this.todavia(item.id)}>Actualizar</button></td>
+                                    <td><button type="button" className="btn btn-info"onClick={()=>this.ToFillInputs(item.id)}>Actualizar</button></td>
                                     <td><button type="button" className="btn btn-danger"onClick={()=>this.todavia(item.id)}>Eliminar</button></td>
                                 </tr>
                             ))}

@@ -11,10 +11,8 @@ class Sucursal_Producto extends Component {
             sucursal_producto_url: "http://asd313751243-001-site1.itempurl.com/api/sucursal_producto",
             sucursal_url: "http://asd313751243-001-site1.itempurl.com/api/sucursal",
             producto_url: "http://asd313751243-001-site1.itempurl.com/api/producto",
-            id_Sucursal: "",
-            id_Producto: "",
-            cantidad_Sucursal_Producto: "",
-            fecha_Sucursal_Producto: "",
+            PUT: "false",
+            valor: 0,
             // para sucursal_producto
             TableItems: [],
             // para sucursal
@@ -51,28 +49,58 @@ class Sucursal_Producto extends Component {
         })
     }
 
-    PostInputItems = () =>{
-
-        fetch(this.state.proxyurl + this.state.sucursal_producto_url,
-            {
-            
-            headers:{
-                'Content-Type': 'application/json'
-            },
-            method: 'POST',
-            body: JSON.stringify({
-                id_Sucursal: this.state.Id_Sucursal,
-                id_Producto: this.state.Id_Producto,
-                cantidad_Sucursal_Producto: this.state.Cantidad_Sucursal_Producto,
-                fecha_Sucursal_Producto: this.state.Fecha_Sucursal_Producto
+    ToApi = () =>{
+        if(this.state.PUT == "false"){
+            fetch(this.state.proxyurl + this.state.sucursal_producto_url,
+                {
+                
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                method: 'POST',
+                body: JSON.stringify({
+                    id_Sucursal: this.state.Id_Sucursal,
+                    id_Producto: this.state.Id_Producto,
+                    cantidad_Sucursal_Producto: this.state.Cantidad_Sucursal_Producto,
+                    fecha_Sucursal_Producto: this.state.Fecha_Sucursal_Producto
+                })
             })
-        })
+        }
+        else if(this.state.PUT == "true"){
+            fetch(this.state.proxyurl + this.state.sucursal_producto_url +"/"+ this.state.valor,
+                {
+                
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                method: 'PUT',
+                body: JSON.stringify({
+                    id: this.state.valor,
+                    id_Sucursal: this.state.Id_Sucursal,
+                    id_Producto: this.state.Id_Producto,
+                    cantidad_Sucursal_Producto: this.state.Cantidad_Sucursal_Producto,
+                    fecha_Sucursal_Producto: this.state.Fecha_Sucursal_Producto
+                })
+            })
+            this.setState({PUT: "false"})
+        }
         this.GetTableItems();
         this.setState({
             Id_Sucursal: "",
             Id_Producto: "",
             Cantidad_Sucursal_Producto: "",
             Fecha_Sucursal_Producto: ""
+        })
+    }
+
+    ToFillInputs = (val) =>{
+        this.setState({
+            Id_Sucursal: this.state.TableItems[parseInt(val)-1].id_Sucursal,
+            Id_Producto: this.state.TableItems[parseInt(val)-1].id_Producto,
+            Cantidad_Sucursal_Producto: this.state.TableItems[parseInt(val)-1].cantidad_Sucursal_Producto,
+            Fecha_Sucursal_Producto: this.state.TableItems[parseInt(val)-1].fecha_Sucursal_Producto,
+            PUT: "true",
+            valor: val
         })
     }
 
@@ -87,21 +115,21 @@ class Sucursal_Producto extends Component {
             <div className="Sucursal_Producto">
                 <div className="inputsucursal_producto-wrapper">
                     <h1>Sucursal_Producto</h1>
-                    <form onSubmit={this.PostInputItems}>
+                    <form onSubmit={this.ToApi}>
                     <select className="form-control" title="Id_Sucursal" onChange={this.ToState} required>
                         <option defaultValue="" disabled selected hidden>---Seleccionar Sucursal---</option>
                             {this.state.Option_1_Items.map((item) =>(
-                                <option type="text" value={item.id}>{item.id} : {item.nombre_Sucursal} </option>
+                                <option value={item.id}>{item.id} : {item.nombre_Sucursal} </option>
                             ))} 
                         </select>
                         <select className="form-control" title="Id_Producto" onChange={this.ToState} required>
                         <option defaultValue="" disabled selected hidden>---Seleccionar Producto---</option>
                             {this.state.Option_2_Items.map((item) =>(
-                                <option type="text" value={item.id}>{item.id} : {item.nombre_Producto} </option>
+                                <option value={item.id}>{item.id} : {item.nombre_Producto} </option>
                             ))} 
                         </select>
-                        <Input title="Cantidad_Sucursal_Producto" handleChange={this.ToState} type="text" data={this.state.Cantidad_Sucursal_Producto}></Input>
-                        <Input title="Fecha_Sucursal_Producto" handleChange={this.ToState} type="text" data={this.state.Fecha_Sucursal_Producto}></Input>
+                        <Input title="Cantidad_Sucursal_Producto" handleChange={this.ToState} type="number" data={this.state.Cantidad_Sucursal_Producto}></Input>
+                        <Input title="Fecha_Sucursal_Producto" handleChange={this.ToState} type="date" data={this.state.Fecha_Sucursal_Producto}></Input>
                         <div className="buttonsucursal_producto-wrapper">
                             <button type="submit" className="btn btn-secondary">Ejecutar</button>
                         </div>
@@ -126,7 +154,7 @@ class Sucursal_Producto extends Component {
                                     <td>{ item.id_Producto }</td>
                                     <td>{ item.cantidad_Sucursal_Producto }</td>
                                     <td>{ item.fecha_Sucursal_Producto }</td>
-                                    <td><button type="button" className="btn btn-info"onClick={()=>this.todavia(item.id)}>Actualizar</button></td>
+                                    <td><button type="button" className="btn btn-info"onClick={()=>this.ToFillInputs(item.id)}>Actualizar</button></td>
                                     <td><button type="button" className="btn btn-danger"onClick={()=>this.todavia(item.id)}>Eliminar</button></td>
                                 </tr>
                             ))}

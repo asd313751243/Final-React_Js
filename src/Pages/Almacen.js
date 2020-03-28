@@ -9,6 +9,8 @@ class Almacen extends Component {
         this.state={
             proxyurl: "https://cors-anywhere.herokuapp.com/",
             url: "http://asd313751243-001-site1.itempurl.com/api/almacen",
+            PUT: "false",
+            valor: 0,
             TableItems: []
         }
     }
@@ -25,29 +27,56 @@ class Almacen extends Component {
         })
     }
 
-    PostInputItems = () =>{
-
-        fetch(this.state.proxyurl + this.state.url,
-            {
-            
-            headers:{
-                'Content-Type': 'application/json'
-            },
-            method: 'POST',
-            body: JSON.stringify({
-                nombre_Almacen: this.state.Nombre_Almacen,
-                ciudad_Almacen: this.state.Ciudad_Almacen,
-                telefono_Almacen: this.state.Telefono_Almacen
+    ToApi = () =>{
+        if(this.state.PUT === "false"){
+            fetch(this.state.proxyurl + this.state.url,
+                {
+                
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                method: 'POST',
+                body: JSON.stringify({
+                    nombre_Almacen: this.state.Nombre_Almacen,
+                    ciudad_Almacen: this.state.Ciudad_Almacen,
+                    telefono_Almacen: this.state.Telefono_Almacen
+                })
             })
-        })
+        }
+        else if(this.state.PUT === "true"){
+            fetch(this.state.proxyurl + this.state.url +"/"+ this.state.valor,
+                {
+                
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                method: 'PUT',
+                body: JSON.stringify({
+                    id: this.state.valor,
+                    nombre_Almacen: this.state.Nombre_Almacen,
+                    ciudad_Almacen: this.state.Ciudad_Almacen,
+                    telefono_Almacen: this.state.Telefono_Almacen
+                })
+            })
+            this.setState({PUT:"false"})
+        }
         this.GetTableItems();
-        this.setState({
-            Nombre_Almacen: "",
-            Ciudad_Almacen: "",
-            Telefono_Almacen: ""
-        })
+            this.setState({
+                Nombre_Almacen: "",
+                Ciudad_Almacen: "",
+                Telefono_Almacen: ""
+            })
     }
 
+    ToFillInputs = (val) =>{
+        this.setState({
+            Nombre_Almacen: this.state.TableItems[parseInt(val)-1].nombre_Almacen,
+            Ciudad_Almacen: this.state.TableItems[parseInt(val)-1].ciudad_Almacen,
+            Telefono_Almacen: this.state.TableItems[parseInt(val)-1].telefono_Almacen,
+            PUT: "true",
+            valor: val
+        })
+    }
 
     ToState = (e) => {
         let partialState={};
@@ -61,10 +90,10 @@ class Almacen extends Component {
             <div className="Almacen">
                 <div className="inputalmacen-wrapper">
                     <h1>Almacen</h1>
-                    <form onSubmit={this.PostInputItems}>
+                    <form onSubmit={this.ToApi}>
                         <Input title="Nombre_Almacen" handleChange={this.ToState} type="text" data={this.state.Nombre_Almacen}></Input>
                         <Input title="Ciudad_Almacen" handleChange={this.ToState} type="text" data={this.state.Ciudad_Almacen}></Input>
-                        <Input title="Telefono_Almacen" handleChange={this.ToState} type="text" data={this.state.Telefono_Almacen}></Input>
+                        <Input title="Telefono_Almacen" handleChange={this.ToState} type="number" data={this.state.Telefono_Almacen}></Input>
                         <div className="buttonalmacen-wrapper">
                             <button type="submit" className="btn btn-secondary">Ejecutar</button>
                         </div>
@@ -87,7 +116,7 @@ class Almacen extends Component {
                                     <td>{ item.nombre_Almacen }</td>
                                     <td>{ item.ciudad_Almacen }</td>
                                     <td>{ item.telefono_Almacen }</td>
-                                    <td><button type="button" className="btn btn-info"onClick={()=>this.todavia(item.id)}>Actualizar</button></td>
+                                    <td><button type="button" className="btn btn-info"onClick={()=>this.ToFillInputs(item.id)}>Actualizar</button></td>
                                     <td><button type="button" className="btn btn-danger"onClick={()=>this.todavia(item.id)}>Eliminar</button></td>
                                 </tr>
                             ))}

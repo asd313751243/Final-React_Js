@@ -9,6 +9,8 @@ class Sucursal extends Component {
         this.state={
             proxyurl: "https://cors-anywhere.herokuapp.com/",
             url: "http://asd313751243-001-site1.itempurl.com/api/sucursal",
+            PUT: "false",
+            valor: 0,
             TableItems: []
         }
     }
@@ -26,26 +28,54 @@ class Sucursal extends Component {
     }
 
     
-    PostInputItems = () =>{
-
-        fetch(this.state.proxyurl + this.state.url,
-            {
-            
-            headers:{
-                'Content-Type': 'application/json'
-            },
-            method: 'POST',
-            body: JSON.stringify({
-                nombre_Sucursal: this.state.Nombre_Sucursal,
-                ciudad_Sucursal: this.state.Ciudad_Sucursal,
-                telefono_Sucursal: this.state.Telefono_Sucursal
+    ToApi = () =>{
+        if(this.state.PUT == "false"){
+            fetch(this.state.proxyurl + this.state.url,
+                {
+                
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                method: 'POST',
+                body: JSON.stringify({
+                    nombre_Sucursal: this.state.Nombre_Sucursal,
+                    ciudad_Sucursal: this.state.Ciudad_Sucursal,
+                    telefono_Sucursal: this.state.Telefono_Sucursal
+                })
             })
-        })
+        }
+        else if(this.state.PUT == "true"){
+            fetch(this.state.proxyurl + this.state.url +"/"+ this.state.valor,
+                {
+                
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                method: 'PUT',
+                body: JSON.stringify({
+                    id: this.state.valor,
+                    nombre_Sucursal: this.state.Nombre_Sucursal,
+                    ciudad_Sucursal: this.state.Ciudad_Sucursal,
+                    telefono_Sucursal: this.state.Telefono_Sucursal
+                })
+            })
+            this.setState({PUT: "false"})
+        }
         this.GetTableItems();
         this.setState({
             Nombre_Sucursal: "",
             Ciudad_Sucursal: "",
             Telefono_Sucursal: ""
+        })  
+    }
+
+    ToFillInputs = (val) =>{
+        this.setState({
+            Nombre_Sucursal: this.state.TableItems[parseInt(val)-1].nombre_Sucursal,
+            Ciudad_Sucursal: this.state.TableItems[parseInt(val)-1].ciudad_Sucursal,
+            Telefono_Sucursal: this.state.TableItems[parseInt(val)-1].telefono_Sucursal,
+            PUT: "true",
+            valor: val
         })
     }
 
@@ -60,10 +90,10 @@ class Sucursal extends Component {
             <div className="Sucursal">
                 <div className="inputsucursal-wrapper">
                     <h1>Sucursal</h1>
-                    <form onSubmit={this.PostInputItems}>
+                    <form onSubmit={this.ToApi}>
                         <Input title="Nombre_Sucursal" handleChange={this.ToState} type="text" data={this.state.Nombre_Sucursal}></Input>
                         <Input title="Ciudad_Sucursal" handleChange={this.ToState} type="text" data={this.state.Ciudad_Sucursal}></Input>
-                        <Input title="Telefono_Sucursal" handleChange={this.ToState} type="text" data={this.state.Telefono_Sucursal}></Input>
+                        <Input title="Telefono_Sucursal" handleChange={this.ToState} type="number" data={this.state.Telefono_Sucursal}></Input>
                         <div className="buttonsucursal-wrapper">
                             <button type="submit" className="btn btn-secondary">Ejecutar</button>
                         </div>
@@ -86,7 +116,7 @@ class Sucursal extends Component {
                                     <td>{ item.nombre_Sucursal }</td>
                                     <td>{ item.ciudad_Sucursal }</td>
                                     <td>{ item.telefono_Sucursal }</td>
-                                    <td><button type="button" className="btn btn-info"onClick={()=>this.todavia(item.id)}>Actualizar</button></td>
+                                    <td><button type="button" className="btn btn-info"onClick={()=>this.ToFillInputs(item.id)}>Actualizar</button></td>
                                     <td><button type="button" className="btn btn-danger"onClick={()=>this.todavia(item.id)}>Eliminar</button></td>
                                 </tr>
                             ))}

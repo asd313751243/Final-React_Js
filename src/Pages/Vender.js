@@ -13,6 +13,8 @@ class Vender extends Component {
             Fecha_Empleado_Producto: "",
             Sub_Total: 0,
             Total: 0,
+            PUT: "false",
+            valor: 0,
             histories: [],
             // para Empleado
             Option_1_Items: [],
@@ -42,23 +44,52 @@ class Vender extends Component {
 
     ToTable = (e) =>{
         e.preventDefault();
-        let history = {
-            Id_Producto: this.state.Id_Producto,
-            Cantidad_Empleado_Producto: this.state.Cantidad_Empleado_Producto,
-            Nombre_Producto: this.state.Option_2_Items[parseInt(this.state.Id_Producto)-1].nombre_Producto,
-            Precio_Producto: this.state.Option_2_Items[parseInt(this.state.Id_Producto)-1].precio_Producto,
-            Sub_Total: parseInt(this.state.Cantidad_Empleado_Producto) * parseInt(this.state.Option_2_Items[parseInt(this.state.Id_Producto)-1].precio_Producto)
+        if(this.state.PUT === "false"){
+            var index = this.state.Option_2_Items.map((item) =>(
+                item.id
+            ))
+            const valor = index.indexOf(parseInt(this.state.Id_Producto))
+            let history = {
+                Id_Producto: this.state.Id_Producto,
+                Cantidad_Empleado_Producto: this.state.Cantidad_Empleado_Producto,
+                Nombre_Producto: this.state.Option_2_Items[valor].nombre_Producto,
+                Precio_Producto: this.state.Option_2_Items[valor].precio_Producto,
+                Sub_Total: parseInt(this.state.Cantidad_Empleado_Producto) * parseInt(this.state.Option_2_Items[valor].precio_Producto)
+            }
+            this.state.histories.push(history)
         }
-        this.state.histories.push(history)
+        else if(this.state.PUT === "true"){
+            this.state.histories[this.state.valor].Id_Empleado = this.state.Id_Empleado;
+            this.state.histories[this.state.valor].Id_Producto = this.state.Id_Producto;
+            this.state.histories[this.state.valor].Cantidad_Empleado_Producto = this.state.Cantidad_Empleado_Producto;
+        }
         let total = 0;
         for(var i=0; i<this.state.histories.length; i++){
             total= total + parseInt(this.state.histories[i].Sub_Total)
         }
         this.setState({
             TableItems: this.state.histories,
-            Total: total
+            Total: total,
+            Id_Empleado: "",
+            Id_Producto: "",
+            Cantidad_Empleado_Producto: ""
         })
-        console.log(this.state.TableItems)
+    }
+
+    ToFillInputs = (val) =>{
+        var index = this.state.histories.map((item) =>(
+            item.Id_Producto
+        ))
+        const valor = index.indexOf(parseInt(val))
+
+        console.log(valor)
+        /*this.setState({
+            //Id_Empleado: this.state.histories[valor].Id_Empleado,
+            Id_Producto: this.state.histories[valor].Id_Producto,
+            Cantidad_Empleado_Producto: this.state.histories[valor].Cantidad_Empleado_Producto,
+            PUT: "true",
+            valor: val
+        })*/
     }
 
     ToState = (e) =>{
@@ -85,7 +116,7 @@ class Vender extends Component {
                                     <option type="text" value={item.id}>{item.id} : {item.nombre_Producto} </option>
                                 ))} 
                         </select>
-                        <Input title="Cantidad_Empleado_Producto" handleChange={this.ToState} type="text" data={this.state.Cantidad_Empleado_Producto}></Input>
+                        <Input title="Cantidad_Empleado_Producto" handleChange={this.ToState} type="number" data={this.state.Cantidad_Empleado_Producto}></Input>
                         <div className="buttonvender-wrapper">
                             <button type="submit" className="btn btn-secondary">Ejecutar</button>
                         </div>
@@ -112,16 +143,13 @@ class Vender extends Component {
                                     <td>{ item.Nombre_Producto }</td>
                                     <td>{ item.Precio_Producto }</td>
                                     <td>{ item.Sub_Total }</td>
-                                    <td><button type="button" className="btn btn-info"onClick={()=>this.todavia(item.Id)}>Actualizar</button></td>
-                                    <td><button type="button" className="btn btn-danger"onClick={()=>this.todavia(item.Id)}>Eliminar</button></td>
+                                    <td><button type="button" className="btn btn-info"onClick={()=>this.ToFillInputs(item.Id_Producto)}>Actualizar</button></td>
+                                    <td><button type="button" className="btn btn-danger"onClick={()=>this.todavia(item.Id_Producto)}>Eliminar</button></td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
                         <h5>Total : {this.state.Total}</h5>
-                        <div className="buttontotal-wrapper">
-                            <button type="button" className="btn btn-success"onClick={()=>this.todavia()}>Calcular</button>
-                        </div>
                 </div>
             </div>
         )
