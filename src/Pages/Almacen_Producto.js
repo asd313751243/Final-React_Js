@@ -131,7 +131,7 @@ class Almacen_Producto extends Component {
         return(
             <div className="Almacen_Producto">
                 <div className="inputalmacen_producto-wrapper">
-                    <h1>Almacen_Producto</h1>
+                    <h1>Productos en los Almacenes</h1>
                     <form onSubmit={this.ToApi}>
                     <select className="form-control" title="Id_Almacen" onChange={this.ToState} required>
                         <option defaultValue="" disabled selected hidden>---Seleccionar Almacen---</option>

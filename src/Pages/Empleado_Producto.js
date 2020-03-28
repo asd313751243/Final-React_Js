@@ -129,7 +129,7 @@ class Empleado_Producto extends Component {
         return(
             <div className="Empleado_Producto">
                 <div className="inputempleado_producto-wrapper">
-                    <h1>Empleado_Producto</h1>
+                    <h1>Ventas</h1>
                     <form onSubmit={this.ToApi}>
                     <select className="form-control" title="Id_Empleado" onChange={this.ToState} required>
                         <option defaultValue="" disabled selected hidden>---Seleccionar Empleado---</option>

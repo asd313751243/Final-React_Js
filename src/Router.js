@@ -38,13 +38,13 @@ class Router extends Component{
                         <li>Almacen</li>
                         </Link>
                         <Link style={color} to="/empleado_producto">
-                        <li>Empleado_Producto</li>
+                        <li>Ventas</li>
                         </Link>
                         <Link style={color} to="/sucursal_producto">
-                        <li>Sucursal_Producto</li>
+                        <li>Productos en los Almacenes</li>
                         </Link>
                         <Link style={color} to="/almacen_producto">
-                        <li>Almacen_Producto</li>
+                        <li>Productos en los Sucursales</li>
                         </Link>
                     </ul>
                 </nav>

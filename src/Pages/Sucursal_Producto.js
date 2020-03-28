@@ -130,7 +130,7 @@ class Sucursal_Producto extends Component {
         return(
             <div className="Sucursal_Producto">
                 <div className="inputsucursal_producto-wrapper">
-                    <h1>Sucursal_Producto</h1>
+                    <h1>Productos en los Sucursales</h1>
                     <form onSubmit={this.ToApi}>
                     <select className="form-control" title="Id_Sucursal" onChange={this.ToState} required>
                         <option defaultValue="" disabled selected hidden>---Seleccionar Sucursal---</option>
