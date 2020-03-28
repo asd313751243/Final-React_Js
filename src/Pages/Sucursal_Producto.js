@@ -93,12 +93,28 @@ class Sucursal_Producto extends Component {
         })
     }
 
+    ToDelete = (val) =>{
+        fetch(this.state.proxyurl + this.state.sucursal_producto_url +"/"+ val,
+        {
+            method: 'DELETE'
+        })
+        .then(res => res.text())
+        .then(res => console.log(res))
+
+        this.GetTableItems();
+    }
+
     ToFillInputs = (val) =>{
+        var index = this.state.TableItems.map((item) =>(
+            item.id
+        ))
+        const valor = index.indexOf(val)
+
         this.setState({
-            Id_Sucursal: this.state.TableItems[parseInt(val)-1].id_Sucursal,
-            Id_Producto: this.state.TableItems[parseInt(val)-1].id_Producto,
-            Cantidad_Sucursal_Producto: this.state.TableItems[parseInt(val)-1].cantidad_Sucursal_Producto,
-            Fecha_Sucursal_Producto: this.state.TableItems[parseInt(val)-1].fecha_Sucursal_Producto,
+            Id_Sucursal: this.state.TableItems[valor].id_Sucursal,
+            Id_Producto: this.state.TableItems[valor].id_Producto,
+            Cantidad_Sucursal_Producto: this.state.TableItems[valor].cantidad_Sucursal_Producto,
+            Fecha_Sucursal_Producto: this.state.TableItems[valor].fecha_Sucursal_Producto,
             PUT: "true",
             valor: val
         })
@@ -155,7 +171,7 @@ class Sucursal_Producto extends Component {
                                     <td>{ item.cantidad_Sucursal_Producto }</td>
                                     <td>{ item.fecha_Sucursal_Producto }</td>
                                     <td><button type="button" className="btn btn-info"onClick={()=>this.ToFillInputs(item.id)}>Actualizar</button></td>
-                                    <td><button type="button" className="btn btn-danger"onClick={()=>this.todavia(item.id)}>Eliminar</button></td>
+                                    <td><button type="button" className="btn btn-danger"onClick={()=>this.ToDelete(item.id)}>Eliminar</button></td>
                                 </tr>
                             ))}
                         </tbody>

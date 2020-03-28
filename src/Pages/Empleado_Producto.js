@@ -91,12 +91,29 @@ class Empleado_Producto extends Component {
             })
     }
 
+    ToDelete = (val) =>{
+        fetch(this.state.proxyurl + this.state.empleado_producto_url +"/"+ val,
+        {
+            method: 'DELETE'
+        })
+        .then(res => res.text())
+        .then(res => console.log(res))
+
+        this.GetTableItems();
+    }
+
+
     ToFillInputs = (val) =>{
+        var index = this.state.TableItems.map((item) =>(
+            item.id
+        ))
+        const valor = index.indexOf(val)
+
         this.setState({
-            Id_Empleado: this.state.TableItems[parseInt(val)-1].id_Empleado,
-            Id_Producto: this.state.TableItems[parseInt(val)-1].id_Producto,
-            Cantidad_Empleado_Producto: this.state.TableItems[parseInt(val)-1].cantidad_Empleado_Producto,
-            Fecha_Empleado_Producto: this.state.TableItems[parseInt(val)-1].fecha_Empleado_Producto,
+            Id_Empleado: this.state.TableItems[valor].id_Empleado,
+            Id_Producto: this.state.TableItems[valor].id_Producto,
+            Cantidad_Empleado_Producto: this.state.TableItems[valor].cantidad_Empleado_Producto,
+            Fecha_Empleado_Producto: this.state.TableItems[valor].fecha_Empleado_Producto,
             PUT: "true",
             valor: val
         })
@@ -150,7 +167,7 @@ class Empleado_Producto extends Component {
                                     <td>{ item.id_Producto }</td>
                                     <td>{ item.cantidad_Empleado_Producto }</td>
                                     <td><button type="button" className="btn btn-info"onClick={()=>this.ToFillInputs(item.id)}>Actualizar</button></td>
-                                    <td><button type="button" className="btn btn-danger"onClick={()=>this.todavia(item.id)}>Eliminar</button></td>
+                                    <td><button type="button" className="btn btn-danger"onClick={()=>this.ToDelete(item.id)}>Eliminar</button></td>
                                 </tr>
                             ))}
                         </tbody>

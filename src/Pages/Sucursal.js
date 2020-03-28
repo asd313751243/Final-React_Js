@@ -29,7 +29,7 @@ class Sucursal extends Component {
 
     
     ToApi = () =>{
-        if(this.state.PUT == "false"){
+        if(this.state.PUT === "false"){
             fetch(this.state.proxyurl + this.state.url,
                 {
                 
@@ -44,7 +44,7 @@ class Sucursal extends Component {
                 })
             })
         }
-        else if(this.state.PUT == "true"){
+        else if(this.state.PUT === "true"){
             fetch(this.state.proxyurl + this.state.url +"/"+ this.state.valor,
                 {
                 
@@ -69,11 +69,27 @@ class Sucursal extends Component {
         })  
     }
 
+    ToDelete = (val) =>{
+        fetch(this.state.proxyurl + this.state.url +"/"+ val,
+        {
+            method: 'DELETE'
+        })
+        .then(res => res.text())
+        .then(res => console.log(res))
+
+        this.GetTableItems();
+    }
+
     ToFillInputs = (val) =>{
+        var index = this.state.TableItems.map((item) =>(
+            item.id
+        ))
+        const valor = index.indexOf(val)
+
         this.setState({
-            Nombre_Sucursal: this.state.TableItems[parseInt(val)-1].nombre_Sucursal,
-            Ciudad_Sucursal: this.state.TableItems[parseInt(val)-1].ciudad_Sucursal,
-            Telefono_Sucursal: this.state.TableItems[parseInt(val)-1].telefono_Sucursal,
+            Nombre_Sucursal: this.state.TableItems[valor].nombre_Sucursal,
+            Ciudad_Sucursal: this.state.TableItems[valor].ciudad_Sucursal,
+            Telefono_Sucursal: this.state.TableItems[valor].telefono_Sucursal,
             PUT: "true",
             valor: val
         })
@@ -117,7 +133,7 @@ class Sucursal extends Component {
                                     <td>{ item.ciudad_Sucursal }</td>
                                     <td>{ item.telefono_Sucursal }</td>
                                     <td><button type="button" className="btn btn-info"onClick={()=>this.ToFillInputs(item.id)}>Actualizar</button></td>
-                                    <td><button type="button" className="btn btn-danger"onClick={()=>this.todavia(item.id)}>Eliminar</button></td>
+                                    <td><button type="button" className="btn btn-danger"onClick={()=>this.ToDelete(item.id)}>Eliminar</button></td>
                                 </tr>
                             ))}
                         </tbody>

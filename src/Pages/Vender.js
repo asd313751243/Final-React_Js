@@ -44,7 +44,7 @@ class Vender extends Component {
 
     ToTable = (e) =>{
         e.preventDefault();
-        if(this.state.PUT === "false"){
+
             var index = this.state.Option_2_Items.map((item) =>(
                 item.id
             ))
@@ -57,12 +57,6 @@ class Vender extends Component {
                 Sub_Total: parseInt(this.state.Cantidad_Empleado_Producto) * parseInt(this.state.Option_2_Items[valor].precio_Producto)
             }
             this.state.histories.push(history)
-        }
-        else if(this.state.PUT === "true"){
-            this.state.histories[this.state.valor].Id_Empleado = this.state.Id_Empleado;
-            this.state.histories[this.state.valor].Id_Producto = this.state.Id_Producto;
-            this.state.histories[this.state.valor].Cantidad_Empleado_Producto = this.state.Cantidad_Empleado_Producto;
-        }
         let total = 0;
         for(var i=0; i<this.state.histories.length; i++){
             total= total + parseInt(this.state.histories[i].Sub_Total)
@@ -76,20 +70,14 @@ class Vender extends Component {
         })
     }
 
-    ToFillInputs = (val) =>{
-        var index = this.state.histories.map((item) =>(
-            item.Id_Producto
-        ))
-        const valor = index.indexOf(parseInt(val))
+    ToClearTable = (e) =>{
+        this.setState({
+            histories:[],
+            TableItems: [],
+            Total: 0
+        })
 
-        console.log(valor)
-        /*this.setState({
-            //Id_Empleado: this.state.histories[valor].Id_Empleado,
-            Id_Producto: this.state.histories[valor].Id_Producto,
-            Cantidad_Empleado_Producto: this.state.histories[valor].Cantidad_Empleado_Producto,
-            PUT: "true",
-            valor: val
-        })*/
+        console.log(this.state.TableItems)
     }
 
     ToState = (e) =>{
@@ -118,7 +106,7 @@ class Vender extends Component {
                         </select>
                         <Input title="Cantidad_Empleado_Producto" handleChange={this.ToState} type="number" data={this.state.Cantidad_Empleado_Producto}></Input>
                         <div className="buttonvender-wrapper">
-                            <button type="submit" className="btn btn-secondary">Ejecutar</button>
+                            <button type="submit" className="btn btn-secondary">Agregar</button>
                         </div>
                     </form>
                 </div>
@@ -131,8 +119,6 @@ class Vender extends Component {
                                 <th>Nombre_Producto</th>
                                 <th>Precio_Producto</th>
                                 <th>Sub_Total</th>
-                                <th>Actualizar</th>
-                                <th>Eliminar</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -143,13 +129,12 @@ class Vender extends Component {
                                     <td>{ item.Nombre_Producto }</td>
                                     <td>{ item.Precio_Producto }</td>
                                     <td>{ item.Sub_Total }</td>
-                                    <td><button type="button" className="btn btn-info"onClick={()=>this.ToFillInputs(item.Id_Producto)}>Actualizar</button></td>
-                                    <td><button type="button" className="btn btn-danger"onClick={()=>this.todavia(item.Id_Producto)}>Eliminar</button></td>
-                                </tr>
+                                    </tr>
                             ))}
                         </tbody>
                     </table>
                         <h5>Total : {this.state.Total}</h5>
+                        <button className="btn btn-info" onClick={()=>this.ToClearTable()}>Limpiar</button>
                 </div>
             </div>
         )

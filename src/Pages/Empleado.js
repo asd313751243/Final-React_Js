@@ -90,15 +90,30 @@ class Empleado extends Component {
             })
     }
 
-    ToFillInputs = (val) =>{
-        this.setState({
+    ToDelete = (val) =>{
+        fetch(this.state.proxyurl + this.state.empleado_url +"/"+ val,
+        {
+            method: 'DELETE'
+        })
+        .then(res => res.text())
+        .then(res => console.log(res))
 
-            Nombre_Empleado: this.state.TableItems[parseInt(val)-1].nombre_Empleado,
-            Sexo_Empleado: this.state.TableItems[parseInt(val)-1].sexo_Empleado,
-            Cedula_Empleado: this.state.TableItems[parseInt(val)-1].cedula_Empleado,
-            Fecha_Nac_Empleado: this.state.TableItems[parseInt(val)-1].fecha_Nac_Empleado,
-            Telefono_Empleado: this.state.TableItems[parseInt(val)-1].telefono_Empleado,
-            Id_Fk_Sucursal: this.state.TableItems[parseInt(val)-1].id_Fk_Sucursal,
+        this.GetTableItems();
+    }
+
+    ToFillInputs = (val) =>{
+        var index = this.state.TableItems.map((item) =>(
+            item.id
+        ))
+        const valor = index.indexOf(val)
+
+        this.setState({
+            Nombre_Empleado: this.state.TableItems[valor].nombre_Empleado,
+            Sexo_Empleado: this.state.TableItems[valor].sexo_Empleado,
+            Cedula_Empleado: this.state.TableItems[valor].cedula_Empleado,
+            Fecha_Nac_Empleado: this.state.TableItems[valor].fecha_Nac_Empleado,
+            Telefono_Empleado: this.state.TableItems[valor].telefono_Empleado,
+            Id_Fk_Sucursal: this.state.TableItems[valor].id_Fk_Sucursal,
             PUT: "true",
             valor: val
         })
@@ -156,7 +171,7 @@ class Empleado extends Component {
                                     <td>{ item.telefono_Empleado }</td>
                                     <td>{ item.id_Fk_Sucursal }</td>
                                     <td><button type="button" className="btn btn-info"onClick={()=>this.ToFillInputs(item.id)}>Actualizar</button></td>
-                                    <td><button type="button" className="btn btn-danger"onClick={()=>this.todavia(item.id)}>Eliminar</button></td>
+                                    <td><button type="button" className="btn btn-danger"onClick={()=>this.ToDelete(item.id)}>Eliminar</button></td>
                                 </tr>
                             ))}
                         </tbody>

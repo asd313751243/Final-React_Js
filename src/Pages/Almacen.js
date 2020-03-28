@@ -68,11 +68,27 @@ class Almacen extends Component {
             })
     }
 
+    ToDelete = (val) =>{
+        fetch(this.state.proxyurl + this.state.url +"/"+ val,
+        {
+            method: 'DELETE'
+        })
+        .then(res => res.text())
+        .then(res => console.log(res))
+
+        this.GetTableItems();
+    }
+
     ToFillInputs = (val) =>{
+        var index = this.state.TableItems.map((item) =>(
+            item.id
+        ))
+        const valor = index.indexOf(val)
+
         this.setState({
-            Nombre_Almacen: this.state.TableItems[parseInt(val)-1].nombre_Almacen,
-            Ciudad_Almacen: this.state.TableItems[parseInt(val)-1].ciudad_Almacen,
-            Telefono_Almacen: this.state.TableItems[parseInt(val)-1].telefono_Almacen,
+            Nombre_Almacen: this.state.TableItems[valor].nombre_Almacen,
+            Ciudad_Almacen: this.state.TableItems[valor].ciudad_Almacen,
+            Telefono_Almacen: this.state.TableItems[valor].telefono_Almacen,
             PUT: "true",
             valor: val
         })
@@ -117,7 +133,7 @@ class Almacen extends Component {
                                     <td>{ item.ciudad_Almacen }</td>
                                     <td>{ item.telefono_Almacen }</td>
                                     <td><button type="button" className="btn btn-info"onClick={()=>this.ToFillInputs(item.id)}>Actualizar</button></td>
-                                    <td><button type="button" className="btn btn-danger"onClick={()=>this.todavia(item.id)}>Eliminar</button></td>
+                                    <td><button type="button" className="btn btn-danger"onClick={()=>this.ToDelete(item.id)}>Eliminar</button></td>
                                 </tr>
                             ))}
                         </tbody>
