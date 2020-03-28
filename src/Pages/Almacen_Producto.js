@@ -21,16 +21,19 @@ class Almacen_Producto extends Component {
     }
 
     componentDidMount(){
-        this.Get();
+        this.GetTableItems();
+        this.GetOptionsItems();
     }
 
-    Get = () =>{
+    GetTableItems = () =>{
         fetch(this.state.proxyurl + this.state.almacen_producto_url)
         .then(res => res.json())
         .then(datos =>{
             this.setState({TableItems: datos})
         })
+    }
 
+    GetOptionsItems = () =>{
         fetch(this.state.proxyurl + this.state.almacen_url)
         .then(res => res.json())
         .then(datos =>{
@@ -41,6 +44,31 @@ class Almacen_Producto extends Component {
         .then(res => res.json())
         .then(datos =>{
             this.setState({Option_2_Items: datos})
+        })
+    }
+
+    PostInputItems = () =>{
+
+        fetch(this.state.proxyurl + this.state.almacen_producto_url,
+            {
+            
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({
+                id_Almacen: this.state.Id_Almacen,
+                id_Producto: this.state.Id_Producto,
+                cantidad_Almacen_Producto: this.state.Cantidad_Almacen_Producto,
+                fecha_Almacen_Producto: this.state.Fecha_Almacen_Producto
+            })
+        })
+        this.GetTableItems();
+        this.setState({
+            Id_Almacen: "",
+            Id_Producto: "",
+            Cantidad_Almacen_Producto: "",
+            Fecha_Almacen_Producto: ""
         })
     }
 
@@ -55,21 +83,21 @@ class Almacen_Producto extends Component {
             <div className="Almacen_Producto">
                 <div className="inputalmacen_producto-wrapper">
                     <h1>Almacen_Producto</h1>
-                    <form onSubmit={this.todavia}>
-                    <select className="form-control" onChange={this.ToState} required>
+                    <form onSubmit={this.PostInputItems}>
+                    <select className="form-control" title="Id_Almacen" onChange={this.ToState} required>
                         <option defaultValue="" disabled selected hidden>---Seleccionar Almacen---</option>
                             {this.state.Option_1_Items.map((item) =>(
-                                <option defaultValue={item.id}>{item.id} : {item.nombre_Almacen} </option>
+                                <option type="text" value={item.id}>{item.id} : {item.nombre_Almacen} </option>
                             ))} 
                         </select>
-                        <select className="form-control" onChange={this.ToState} required>
+                        <select className="form-control" title="Id_Producto" onChange={this.ToState} required>
                         <option defaultValue="" disabled selected hidden>---Seleccionar Producto---</option>
                             {this.state.Option_2_Items.map((item) =>(
-                                <option defaultValue={item.id}>{item.id} : {item.nombre_Producto} </option>
+                                <option type="text" value={item.id}>{item.id} : {item.nombre_Producto} </option>
                             ))} 
                         </select>
-                        <Input title="Cantidad_Almacen_Producto" handleChange={this.ToState} type="number" data={this.state.Cantidad_Almacen_Producto}></Input>
-                        <Input title="Fecha_Almacen_Producto" handleChange={this.ToState} type="date" data={this.state.Fecha_Almacen_Producto}></Input>
+                        <Input title="Cantidad_Almacen_Producto" handleChange={this.ToState} type="text" data={this.state.Cantidad_Almacen_Producto}></Input>
+                        <Input title="Fecha_Almacen_Producto" handleChange={this.ToState} type="text" data={this.state.Fecha_Almacen_Producto}></Input>
                         <div className="buttonalmacen_producto-wrapper">
                             <button type="submit" className="btn btn-secondary">Ejecutar</button>
                         </div>

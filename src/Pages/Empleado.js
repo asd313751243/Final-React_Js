@@ -10,8 +10,6 @@ class Empleado extends Component {
             proxyurl: "https://cors-anywhere.herokuapp.com/",
             empleado_url: "http://asd313751243-001-site1.itempurl.com/api/empleado",
             sucursal_url: "http://asd313751243-001-site1.itempurl.com/api/sucursal",
-            usuario_Empleado: "",
-            contra_Empleado: "",
             // para empleado
             TableItems: [],
             // para sucursal
@@ -20,16 +18,19 @@ class Empleado extends Component {
     }
 
     componentDidMount(){
-        this.Get();
+        this.GetTableItems();
+        this.GetOptionsItems();
     }
 
-    Get = () =>{
+    GetTableItems = () =>{
         fetch(this.state.proxyurl + this.state.empleado_url)
         .then(res => res.json())
         .then(datos =>{
             this.setState({TableItems: datos})
         })
+    }
 
+    GetOptionsItems = () =>{
         fetch(this.state.proxyurl + this.state.sucursal_url)
         .then(res => res.json())
         .then(datos =>{
@@ -37,9 +38,37 @@ class Empleado extends Component {
         })
     }
 
+    PostInputItems = () =>{
+
+        fetch(this.state.proxyurl + this.state.empleado_url,
+            {
+            
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({
+                nombre_Empleado: this.state.Nombre_Empleado,
+                sexo_Empleado: this.state.Sexo_Empleado,
+                cedula_Empleado: this.state.Cedula_Empleado,
+                fecha_Nac_Empleado: this.state.Fecha_Nac_Empleado,
+                telefono_Empleado: this.state.Telefono_Empleado,
+                id_Fk_Sucursal : this.state.Id_Fk_Sucursal,
+            })
+        })
+        this.GetTableItems();
+        this.setState({
+            Nombre_Empleado: "",
+            Sexo_Empleado: "",
+            Cedula_Empleado: "",
+            Fecha_Nac_Empleado: "",
+            Telefono_Empleado: "",
+            Id_Fk_Sucursal: "",
+        })
+    }
+
     ToState = (e) =>{
         let partialState = {};
-        
         partialState[e.target.title] = e.target.value;
         this.setState(partialState)
     }
@@ -49,15 +78,16 @@ class Empleado extends Component {
             <div className="Empleado">
                 <div className="inputempleado-wrapper">
                     <h1>Empleado</h1>
-                    <form onSubmit={this.todavia}>
+                    <form onSubmit={this.PostInputItems}>
                         <Input title="Nombre_Empleado" handleChange={this.ToState} type="text" data={this.state.Nombre_Empleado}></Input>
                         <Input title="Sexo_Empleado" handleChange={this.ToState} type="text" data={this.state.Sexo_Empleado}></Input>
-                        <Input title="Cedula_Empleado" handleChange={this.ToState} type="number" data={this.state.Cedula_Empleado}></Input>
-                        <Input title="Fecha_Nac_Empleado" handleChange={this.ToState} type="date" data={this.state.Fecha_Nac_Empleado}></Input>
-                        <select className="form-control" onChange={this.ToState} required>
+                        <Input title="Cedula_Empleado" handleChange={this.ToState} type="text" data={this.state.Cedula_Empleado}></Input>
+                        <Input title="Fecha_Nac_Empleado" handleChange={this.ToState} type="text" data={this.state.Fecha_Nac_Empleado}></Input>
+                        <Input title="Telefono_Empleado" handleChange={this.ToState} type="text" data={this.state.Telefono_Empleado}></Input>
+                        <select className="form-control" title="Id_Fk_Sucursal"  onChange={this.ToState} required>
                         <option defaultValue="" disabled selected hidden>---Seleccionar Sucursal---</option>
                             {this.state.OptionItems.map((item) =>(
-                                <option defaultValue={item.id}>{item.id} : {item.nombre_Sucursal} </option>
+                                <option type="text" Value={item.id}>{item.id} : {item.nombre_Sucursal} </option>
                             ))} 
                         </select>
                         <div className="buttonempleado-wrapper">
@@ -82,7 +112,7 @@ class Empleado extends Component {
                             {this.state.TableItems.map((item) => (
                                 <tr>
                                     <td>{ item.id }</td>
-                                    <td>{ item.nombre_Empleadol }</td>
+                                    <td>{ item.nombre_Empleado }</td>
                                     <td>{ item.sexo_Empleado }</td>
                                     <td>{ item.cedula_Empleado }</td>
                                     <td>{ item.fecha_Nac_Empleado }</td>

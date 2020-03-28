@@ -14,16 +14,40 @@ class Almacen extends Component {
     }
 
     componentDidMount(){
-        this.Get();
+        this.GetTableItems();
     }
 
-    Get = () =>{
+    GetTableItems = () =>{
         fetch(this.state.proxyurl + this.state.url)
         .then(res => res.json())
         .then(datos =>{
             this.setState({TableItems: datos})
         })
     }
+
+    PostInputItems = () =>{
+
+        fetch(this.state.proxyurl + this.state.url,
+            {
+            
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({
+                nombre_Almacen: this.state.Nombre_Almacen,
+                ciudad_Almacen: this.state.Ciudad_Almacen,
+                telefono_Almacen: this.state.Telefono_Almacen
+            })
+        })
+        this.GetTableItems();
+        this.setState({
+            Nombre_Almacen: "",
+            Ciudad_Almacen: "",
+            Telefono_Almacen: ""
+        })
+    }
+
 
     ToState = (e) => {
         let partialState={};
@@ -37,10 +61,10 @@ class Almacen extends Component {
             <div className="Almacen">
                 <div className="inputalmacen-wrapper">
                     <h1>Almacen</h1>
-                    <form onSubmit={this.todavia}>
+                    <form onSubmit={this.PostInputItems}>
                         <Input title="Nombre_Almacen" handleChange={this.ToState} type="text" data={this.state.Nombre_Almacen}></Input>
                         <Input title="Ciudad_Almacen" handleChange={this.ToState} type="text" data={this.state.Ciudad_Almacen}></Input>
-                        <Input title="Telefono_Almacen" handleChange={this.ToState} type="number" data={this.state.Telefono_Almacen}></Input>
+                        <Input title="Telefono_Almacen" handleChange={this.ToState} type="text" data={this.state.Telefono_Almacen}></Input>
                         <div className="buttonalmacen-wrapper">
                             <button type="submit" className="btn btn-secondary">Ejecutar</button>
                         </div>

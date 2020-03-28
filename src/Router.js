@@ -10,8 +10,6 @@ import Empleado from './Pages/Empleado';
 import Almacen_Producto from './Pages/Almacen_Producto';
 import Sucursal_Producto from './Pages/Sucursal_Producto';
 import Empleado_Producto from './Pages/Empleado_Producto';
-import Log_In from './Pages/Log_In';
-import Sign_In from './Pages/Sign_In';
 
 class Router extends Component{
     render(){
@@ -48,13 +46,10 @@ class Router extends Component{
                         <Link style={color} to="/almacen_producto">
                         <li>Almacen_Producto</li>
                         </Link>
-                        <Link style={color} to="/log_in">
-                        <li>Log Out</li>
-                        </Link>
                     </ul>
                 </nav>
                 <Switch>
-                    <Route exact path="/" component={Log_In}></Route>
+                    <Route exact path="/" component={Vender}></Route>
                     <Route exact path="/vender" component={Vender}></Route>
                     <Route exact path="/producto" component={Producto}></Route>
                     <Route exact path="/empleado" component={Empleado}></Route>
@@ -63,8 +58,6 @@ class Router extends Component{
                     <Route exact path="/empleado_producto" component={Empleado_Producto}></Route>
                     <Route exact path="/sucursal_producto" component={Sucursal_Producto}></Route>
                     <Route exact path="/almacen_producto" component={Almacen_Producto}></Route>
-                    <Route exact path="/log_in" component={Log_In}></Route>
-                    <Route exact path="/sign_in" component={Sign_In}></Route>
                 </Switch>
                 </BrowserRouter>
 

@@ -21,16 +21,19 @@ class Empleado_Producto extends Component {
     }
 
     componentDidMount(){
-        this.Get();
+        this.GetTableItems();
+        this.GetOptionsItems();
     }
 
-    Get = () =>{
+    GetTableItems = () =>{
         fetch(this.state.proxyurl + this.state.empleado_producto_url)
         .then(res => res.json())
         .then(datos =>{
             this.setState({TableItems: datos})
         })
+    }
 
+    GetOptionsItems = () =>{
         fetch(this.state.proxyurl + this.state.empleado_url)
         .then(res => res.json())
         .then(datos =>{
@@ -41,6 +44,31 @@ class Empleado_Producto extends Component {
         .then(res => res.json())
         .then(datos =>{
             this.setState({Option_2_Items: datos})
+        })
+    }
+
+    PostInputItems = () =>{
+
+        fetch(this.state.proxyurl + this.state.empleado_producto_url,
+            {
+            
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({
+                id_Empleado: this.state.Id_Empleado,
+                id_Producto: this.state.Id_Producto,
+                cantidad_Empleado_Producto: this.state.Cantidad_Empleado_Producto,
+                fecha_Empleado_Producto: this.state.Fecha_Empleado_Producto
+            })
+        })
+        this.GetTableItems();
+        this.setState({
+            Id_Empleado: "",
+            Id_Producto: "",
+            Cantidad_Empleado_Producto: "",
+            Fecha_Empleado_Producto: ""
         })
     }
 
@@ -55,21 +83,21 @@ class Empleado_Producto extends Component {
             <div className="Empleado_Producto">
                 <div className="inputempleado_producto-wrapper">
                     <h1>Empleado_Producto</h1>
-                    <form onSubmit={this.todavia}>
-                    <select className="form-control" onChange={this.todavia} required>
+                    <form onSubmit={this.PostInputItems}>
+                    <select className="form-control" title="Id_Empleado" onChange={this.ToState} required>
                         <option defaultValue="" disabled selected hidden>---Seleccionar Empleado---</option>
                             {this.state.Option_1_Items.map((item) =>(
-                                <option defaultValue={item.id}>{item.id} : {item.nombre_Empleado} </option>
+                                <option type="text" value={item.id}>{item.id} : {item.nombre_Empleado} </option>
                             ))} 
                         </select>
-                        <select className="form-control" onChange={this.todavia} required>
+                        <select className="form-control" title="Id_Producto" onChange={this.ToState} required>
                         <option defaultValue="" disabled selected hidden>---Seleccionar Producto---</option>
                             {this.state.Option_2_Items.map((item) =>(
-                                <option defaultValue={item.id}>{item.id} : {item.nombre_Producto} </option>
+                                <option type="text" value={item.id}>{item.id} : {item.nombre_Producto} </option>
                             ))} 
                         </select>
-                        <Input title="Cantidad_Empleado_Producto" handleChange={this.todavia} type="number" data={this.state.Cantidad_Empleado_Producto}></Input>                    
-                        <Input title="Fecha_Empleado_Producto" handleChange={this.todavia} type="date" data={this.state.fecha_Empleado_Producto}></Input>
+                        <Input title="Cantidad_Empleado_Producto" handleChange={this.ToState} type="text" data={this.state.Cantidad_Empleado_Producto}></Input>                    
+                        <Input title="Fecha_Empleado_Producto" handleChange={this.ToState} type="text" data={this.state.fecha_Empleado_Producto}></Input>
                         <div className="buttonempleado_producto-wrapper">
                             <button type="submit" className="btn btn-secondary">Ejecutar</button>
                         </div>

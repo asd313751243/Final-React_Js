@@ -14,14 +14,38 @@ class Sucursal extends Component {
     }
 
     componentDidMount(){
-        this.Get();
+        this.GetTableItems();
     }
 
-    Get = () =>{
+    GetTableItems = () =>{
         fetch(this.state.proxyurl + this.state.url)
         .then(res => res.json())
         .then(datos =>{
             this.setState({TableItems: datos})
+        })
+    }
+
+    
+    PostInputItems = () =>{
+
+        fetch(this.state.proxyurl + this.state.url,
+            {
+            
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({
+                nombre_Sucursal: this.state.Nombre_Sucursal,
+                ciudad_Sucursal: this.state.Ciudad_Sucursal,
+                telefono_Sucursal: this.state.Telefono_Sucursal
+            })
+        })
+        this.GetTableItems();
+        this.setState({
+            Nombre_Sucursal: "",
+            Ciudad_Sucursal: "",
+            Telefono_Sucursal: ""
         })
     }
 
@@ -36,10 +60,10 @@ class Sucursal extends Component {
             <div className="Sucursal">
                 <div className="inputsucursal-wrapper">
                     <h1>Sucursal</h1>
-                    <form onSubmit={this.todavia}>
+                    <form onSubmit={this.PostInputItems}>
                         <Input title="Nombre_Sucursal" handleChange={this.ToState} type="text" data={this.state.Nombre_Sucursal}></Input>
                         <Input title="Ciudad_Sucursal" handleChange={this.ToState} type="text" data={this.state.Ciudad_Sucursal}></Input>
-                        <Input title="Telefono_Sucursal" handleChange={this.ToState} type="number" data={this.state.Telefono_Sucursal}></Input>
+                        <Input title="Telefono_Sucursal" handleChange={this.ToState} type="text" data={this.state.Telefono_Sucursal}></Input>
                         <div className="buttonsucursal-wrapper">
                             <button type="submit" className="btn btn-secondary">Ejecutar</button>
                         </div>

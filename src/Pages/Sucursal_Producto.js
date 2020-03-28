@@ -25,16 +25,19 @@ class Sucursal_Producto extends Component {
     }
 
     componentDidMount(){
-        this.Get();
+        this.GetTableItems();
+        this.GetOptionsItems();
     }
 
-    Get = () =>{
+    GetTableItems = () =>{
         fetch(this.state.proxyurl + this.state.sucursal_producto_url)
         .then(res => res.json())
         .then(datos =>{
             this.setState({TableItems: datos})
         })
+    }
 
+    GetOptionsItems = () =>{
         fetch(this.state.proxyurl + this.state.sucursal_url)
         .then(res => res.json())
         .then(datos =>{
@@ -45,6 +48,31 @@ class Sucursal_Producto extends Component {
         .then(res => res.json())
         .then(datos =>{
             this.setState({Option_2_Items: datos})
+        })
+    }
+
+    PostInputItems = () =>{
+
+        fetch(this.state.proxyurl + this.state.sucursal_producto_url,
+            {
+            
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({
+                id_Sucursal: this.state.Id_Sucursal,
+                id_Producto: this.state.Id_Producto,
+                cantidad_Sucursal_Producto: this.state.Cantidad_Sucursal_Producto,
+                fecha_Sucursal_Producto: this.state.Fecha_Sucursal_Producto
+            })
+        })
+        this.GetTableItems();
+        this.setState({
+            Id_Sucursal: "",
+            Id_Producto: "",
+            Cantidad_Sucursal_Producto: "",
+            Fecha_Sucursal_Producto: ""
         })
     }
 
@@ -59,21 +87,21 @@ class Sucursal_Producto extends Component {
             <div className="Sucursal_Producto">
                 <div className="inputsucursal_producto-wrapper">
                     <h1>Sucursal_Producto</h1>
-                    <form onSubmit={this.todavia}>
-                    <select className="form-control" onChange={this.ToState} required>
+                    <form onSubmit={this.PostInputItems}>
+                    <select className="form-control" title="Id_Sucursal" onChange={this.ToState} required>
                         <option defaultValue="" disabled selected hidden>---Seleccionar Sucursal---</option>
                             {this.state.Option_1_Items.map((item) =>(
-                                <option defaultValue={item.id}>{item.id} : {item.nombre_Sucursal} </option>
+                                <option type="text" value={item.id}>{item.id} : {item.nombre_Sucursal} </option>
                             ))} 
                         </select>
-                        <select className="form-control" onChange={this.ToState} required>
+                        <select className="form-control" title="Id_Producto" onChange={this.ToState} required>
                         <option defaultValue="" disabled selected hidden>---Seleccionar Producto---</option>
                             {this.state.Option_2_Items.map((item) =>(
-                                <option defaultValue={item.id}>{item.id} : {item.nombre_Producto} </option>
+                                <option type="text" value={item.id}>{item.id} : {item.nombre_Producto} </option>
                             ))} 
                         </select>
-                        <Input title="Cantidad_Sucursal_Producto" handleChange={this.ToState} type="number" data={this.state.Cantidad_Sucursal_Producto}></Input>
-                        <Input title="Fecha_Sucursal_Producto" handleChange={this.ToState} type="date" data={this.state.Fecha_Sucursal_Producto}></Input>
+                        <Input title="Cantidad_Sucursal_Producto" handleChange={this.ToState} type="text" data={this.state.Cantidad_Sucursal_Producto}></Input>
+                        <Input title="Fecha_Sucursal_Producto" handleChange={this.ToState} type="text" data={this.state.Fecha_Sucursal_Producto}></Input>
                         <div className="buttonsucursal_producto-wrapper">
                             <button type="submit" className="btn btn-secondary">Ejecutar</button>
                         </div>

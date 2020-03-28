@@ -14,16 +14,40 @@ class Producto extends Component {
     }
 
     componentDidMount(){
-        this.Get();
+        this.GetTableItems();
     }
 
-    Get = () =>{
+    GetTableItems = () =>{
         fetch(this.state.proxyurl + this.state.url)
         .then(res => res.json())
         .then(datos =>{
             this.setState({TableItems: datos})
         })
     }
+
+    PostInputItems = () =>{
+
+        fetch(this.state.proxyurl + this.state.url,
+            {
+            
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({
+                nombre_Producto: this.state.Nombre_Producto,
+                precio_Producto: this.state.Precio_Producto,
+                fecha_Venc_Producto: this.state.Fecha_Venc_Producto
+            })
+        })
+        this.GetTableItems();
+        this.setState({
+            Nombre_Producto: "",
+            Precio_Producto: "",
+            Fecha_Venc_Producto: "",
+        })
+    }
+
 
     ToState = (e) =>{
         let partialState = {};
@@ -36,11 +60,10 @@ class Producto extends Component {
             <div className="Producto">
                 <div className="inputproducto-wrapper">
                     <h1>Producto</h1>
-                    <form onSubmit={this.todavia}>
+                    <form onSubmit={this.PostInputItems}>
                         <Input title="Nombre_Producto" handleChange={this.ToState} type="text" data={this.state.Nombre_Producto}></Input>
-                        <Input title="Precio_Producto" handleChange={this.ToState} type="number" data={this.state.Precio_Producto}></Input>
-                        <Input title="Cantidad_Producto" handleChange={this.ToState} type="number" data={this.state.Cantidad_Producto}></Input>
-                        <Input title="Fecha_Venc_Producto" handleChange={this.ToState} type="date" data={this.state.Fecha_Venc_Producto}></Input>
+                        <Input title="Precio_Producto" handleChange={this.ToState} type="text" data={this.state.Precio_Producto}></Input>                    
+                        <Input title="Fecha_Venc_Producto" handleChange={this.ToState} type="text" data={this.state.Fecha_Venc_Producto}></Input>
                         <div className="buttonproducto-wrapper">
                             <button type="submit" className="btn btn-secondary">Ejecutar</button>
                         </div>
@@ -53,7 +76,6 @@ class Producto extends Component {
                                 <th>Id_Producto</th>
                                 <th>Nombre_Producto</th>
                                 <th>Precio_Producto</th>
-                                <th>Cantidad_Producto</th>
                                 <th>Fecha_Venc_Producto</th>
                             </tr>
                         </thead>
