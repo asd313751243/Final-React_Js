@@ -7,7 +7,7 @@ const Input = (props) => (
         className="form-control"
         title={props.title}
         onChange={props.handleChange}
-        placeholder={props.title}
+        placeholder={props.holder}
         value={props.data}
         required />
     </div>

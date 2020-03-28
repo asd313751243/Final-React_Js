@@ -64,16 +64,18 @@ class Vender extends Component {
         this.setState({
             TableItems: this.state.histories,
             Total: total,
-            Id_Empleado: "",
-            Id_Producto: "",
             Cantidad_Empleado_Producto: ""
         })
+        document.getElementById("default1").selectedIndex = 0;
+        document.getElementById("default2").selectedIndex = 0;
     }
 
     ToClearTable = (e) =>{
         this.setState({
             histories:[],
             TableItems: [],
+            Id_Empleado: "",
+            Id_Producto: "",
             Total: 0
         })
 
@@ -92,19 +94,19 @@ class Vender extends Component {
                 <div className="inputvender-wrapper">
                     <h1>Facturar</h1>
                     <form onSubmit={this.ToTable}>
-                        <select className="form-control" title="Id_Empleado" onChange={this.ToState} required>
-                            <option defaultvalue="" disabled selected hidden>---Seleccionar Empleado---</option>
+                        <select id="default1" className="form-control" title="Id_Empleado" onChange={this.ToState} required>
+                            <option value="" disabled selected hidden>---Seleccionar Empleado---</option>
                                 {this.state.Option_1_Items.map((item) =>(
                                     <option type="text" value={item.id}>{item.id} : {item.nombre_Empleado} </option>
                             ))} 
                         </select>
-                        <select className="form-control" title="Id_Producto" onChange={this.ToState} required>
-                            <option defaultvalue="" disabled selected hidden>---Seleccionar Producto---</option>
+                        <select id="default2"className="form-control" title="Id_Producto" onChange={this.ToState} required>
+                            <option value="" disabled selected hidden>---Seleccionar Producto---</option>
                                 {this.state.Option_2_Items.map((item) =>(
                                     <option type="text" value={item.id}>{item.id} : {item.nombre_Producto} </option>
                                 ))} 
                         </select>
-                        <Input title="Cantidad_Empleado_Producto" handleChange={this.ToState} type="number" data={this.state.Cantidad_Empleado_Producto}></Input>
+                        <Input holder="Cantidad" title="Cantidad_Empleado_Producto" handleChange={this.ToState} type="number" data={this.state.Cantidad_Empleado_Producto}></Input>
                         <div className="buttonvender-wrapper">
                             <button type="submit" className="btn btn-secondary">Agregar</button>
                         </div>

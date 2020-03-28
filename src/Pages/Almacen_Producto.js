@@ -145,8 +145,8 @@ class Almacen_Producto extends Component {
                                 <option value={item.id}>{item.id} : {item.nombre_Producto} </option>
                             ))} 
                         </select>
-                        <Input title="Cantidad_Almacen_Producto" handleChange={this.ToState} type="number" data={this.state.Cantidad_Almacen_Producto}></Input>
-                        <Input title="Fecha_Almacen_Producto" handleChange={this.ToState} type="date" data={this.state.Fecha_Almacen_Producto}></Input>
+                        <Input holder="Cantidad" title="Cantidad_Almacen_Producto" handleChange={this.ToState} type="number" data={this.state.Cantidad_Almacen_Producto}></Input>
+                        <Input holder="Fecha" title="Fecha_Almacen_Producto" handleChange={this.ToState} type="date" data={this.state.Fecha_Almacen_Producto}></Input>
                         <div className="buttonalmacen_producto-wrapper">
                             <button type="submit" className="btn btn-secondary">Ejecutar</button>
                         </div>

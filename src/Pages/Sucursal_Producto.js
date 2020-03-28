@@ -144,8 +144,8 @@ class Sucursal_Producto extends Component {
                                 <option value={item.id}>{item.id} : {item.nombre_Producto} </option>
                             ))} 
                         </select>
-                        <Input title="Cantidad_Sucursal_Producto" handleChange={this.ToState} type="number" data={this.state.Cantidad_Sucursal_Producto}></Input>
-                        <Input title="Fecha_Sucursal_Producto" handleChange={this.ToState} type="date" data={this.state.Fecha_Sucursal_Producto}></Input>
+                        <Input holder="Cantidad" title="Cantidad_Sucursal_Producto" handleChange={this.ToState} type="number" data={this.state.Cantidad_Sucursal_Producto}></Input>
+                        <Input holder="Fecha" title="Fecha_Sucursal_Producto" handleChange={this.ToState} type="date" data={this.state.Fecha_Sucursal_Producto}></Input>
                         <div className="buttonsucursal_producto-wrapper">
                             <button type="submit" className="btn btn-secondary">Ejecutar</button>
                         </div>

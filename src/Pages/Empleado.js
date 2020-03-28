@@ -131,11 +131,11 @@ class Empleado extends Component {
                 <div className="inputempleado-wrapper">
                     <h1>Empleado</h1>
                     <form onSubmit={this.ToApi}>
-                        <Input title="Nombre_Empleado" handleChange={this.ToState} type="text" data={this.state.Nombre_Empleado}></Input>
-                        <Input title="Sexo_Empleado" handleChange={this.ToState} type="text" data={this.state.Sexo_Empleado}></Input>
-                        <Input title="Cedula_Empleado" handleChange={this.ToState} type="number" data={this.state.Cedula_Empleado}></Input>
-                        <Input title="Fecha_Nac_Empleado" handleChange={this.ToState} type="date" data={this.state.Fecha_Nac_Empleado}></Input>
-                        <Input title="Telefono_Empleado" handleChange={this.ToState} type="number" data={this.state.Telefono_Empleado}></Input>
+                        <Input holder="Nombre" title="Nombre_Empleado" handleChange={this.ToState} type="text" data={this.state.Nombre_Empleado}></Input>
+                        <Input holder="Sexo" title="Sexo_Empleado" handleChange={this.ToState} type="text" data={this.state.Sexo_Empleado}></Input>
+                        <Input holder="Cedula" title="Cedula_Empleado" handleChange={this.ToState} type="number" data={this.state.Cedula_Empleado}></Input>
+                        <Input holder="Fecha" title="Fecha_Nac_Empleado" handleChange={this.ToState} type="date" data={this.state.Fecha_Nac_Empleado}></Input>
+                        <Input holder="Telefono" title="Telefono_Empleado" handleChange={this.ToState} type="number" data={this.state.Telefono_Empleado}></Input>
                         <select className="form-control" title="Id_Fk_Sucursal"  onChange={this.ToState} required>
                         <option defaultValue="" disabled selected hidden>---Seleccionar Sucursal---</option>
                             {this.state.OptionItems.map((item) =>(

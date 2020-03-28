@@ -107,9 +107,9 @@ class Almacen extends Component {
                 <div className="inputalmacen-wrapper">
                     <h1>Almacen</h1>
                     <form onSubmit={this.ToApi}>
-                        <Input title="Nombre_Almacen" handleChange={this.ToState} type="text" data={this.state.Nombre_Almacen}></Input>
-                        <Input title="Ciudad_Almacen" handleChange={this.ToState} type="text" data={this.state.Ciudad_Almacen}></Input>
-                        <Input title="Telefono_Almacen" handleChange={this.ToState} type="number" data={this.state.Telefono_Almacen}></Input>
+                        <Input holder="Nombre" title="Nombre_Almacen" handleChange={this.ToState} type="text" data={this.state.Nombre_Almacen}></Input>
+                        <Input holder="Ciudad" title="Ciudad_Almacen" handleChange={this.ToState} type="text" data={this.state.Ciudad_Almacen}></Input>
+                        <Input holder="Telefono" title="Telefono_Almacen" handleChange={this.ToState} type="number" data={this.state.Telefono_Almacen}></Input>
                         <div className="buttonalmacen-wrapper">
                             <button type="submit" className="btn btn-secondary">Ejecutar</button>
                         </div>

@@ -107,9 +107,9 @@ class Sucursal extends Component {
                 <div className="inputsucursal-wrapper">
                     <h1>Sucursal</h1>
                     <form onSubmit={this.ToApi}>
-                        <Input title="Nombre_Sucursal" handleChange={this.ToState} type="text" data={this.state.Nombre_Sucursal}></Input>
-                        <Input title="Ciudad_Sucursal" handleChange={this.ToState} type="text" data={this.state.Ciudad_Sucursal}></Input>
-                        <Input title="Telefono_Sucursal" handleChange={this.ToState} type="number" data={this.state.Telefono_Sucursal}></Input>
+                        <Input holder="Nombre" title="Nombre_Sucursal" handleChange={this.ToState} type="text" data={this.state.Nombre_Sucursal}></Input>
+                        <Input holder="Ciudad" title="Ciudad_Sucursal" handleChange={this.ToState} type="text" data={this.state.Ciudad_Sucursal}></Input>
+                        <Input holder="Telefono" title="Telefono_Sucursal" handleChange={this.ToState} type="number" data={this.state.Telefono_Sucursal}></Input>
                         <div className="buttonsucursal-wrapper">
                             <button type="submit" className="btn btn-secondary">Ejecutar</button>
                         </div>

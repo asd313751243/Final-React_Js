@@ -106,9 +106,9 @@ class Producto extends Component {
                 <div className="inputproducto-wrapper">
                     <h1>Producto</h1>
                     <form onSubmit={this.ToApi}>
-                        <Input title="Nombre_Producto" handleChange={this.ToState} type="text" data={this.state.Nombre_Producto}></Input>
-                        <Input title="Precio_Producto" handleChange={this.ToState} type="number" data={this.state.Precio_Producto}></Input>                    
-                        <Input title="Fecha_Venc_Producto" handleChange={this.ToState} type="date" data={this.state.Fecha_Venc_Producto}></Input>
+                        <Input holder="Nombre" title="Nombre_Producto" handleChange={this.ToState} type="text" data={this.state.Nombre_Producto}></Input>
+                        <Input holder="Precio" title="Precio_Producto" handleChange={this.ToState} type="number" data={this.state.Precio_Producto}></Input>                    
+                        <Input holder="Fecha" title="Fecha_Venc_Producto" handleChange={this.ToState} type="date" data={this.state.Fecha_Venc_Producto}></Input>
                         <div className="buttonproducto-wrapper">
                             <button type="submit" className="btn btn-secondary">Ejecutar</button>
                         </div>

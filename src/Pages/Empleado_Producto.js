@@ -143,7 +143,7 @@ class Empleado_Producto extends Component {
                                 <option value={item.id}>{item.id} : {item.nombre_Producto} </option>
                             ))} 
                         </select>
-                        <Input title="Cantidad_Empleado_Producto" handleChange={this.ToState} type="number" data={this.state.Cantidad_Empleado_Producto}></Input>                    
+                        <Input holder="Cantidad" title="Cantidad_Empleado_Producto" handleChange={this.ToState} type="number" data={this.state.Cantidad_Empleado_Producto}></Input>                    
                         <div className="buttonempleado_producto-wrapper">
                             <button type="submit" className="btn btn-secondary">Ejecutar</button>
                         </div>
